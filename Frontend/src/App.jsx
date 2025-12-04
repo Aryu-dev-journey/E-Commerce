@@ -56,6 +56,7 @@ export default function App() {
       path:"/wishlist",
       element :<><Navbar/> <Wishlist/></>
     },
+
   ]);
 
   return <RouterProvider router={router} />;

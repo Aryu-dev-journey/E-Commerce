@@ -386,7 +386,6 @@ export default function CategoriesPage({ categories = sampleCategories }) {
                       </button>
 
                       {/* Expanded preview */}
-
                     </motion.li>
                   ))}
                 </motion.ul>

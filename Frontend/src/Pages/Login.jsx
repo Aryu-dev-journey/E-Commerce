@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 export default function BlackWhiteSignPage() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   function handleChange(e) {
     setForm((s) => ({ ...s, [e.target.name]: e.target.value }));
@@ -30,6 +30,21 @@ export default function BlackWhiteSignPage() {
       return;
     }
 
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      alert("Please enter a valid email address");
+      setLoading(false);
+      return;
+    }
+
+    // Password strength check
+    if (form.password.length < 8) {
+      alert("Password must be at least 8 characters long");
+      setLoading(false);
+      return;
+    }
+
     try {
       const endpoint = isSignUp
         ? "http://localhost:3000/api/register"
@@ -40,32 +55,70 @@ export default function BlackWhiteSignPage() {
       if (response.status === 200 || response.status === 201) {
         alert(isSignUp ? "Registration successful" : "Login successful");
         
-        // Store user data in localStorage
-        const userData = {
+        // Store user data in React state (NOT localStorage)
+        const user = {
           name: isSignUp ? form.name : response.data.user?.name || form.email.split('@')[0],
           email: form.email,
-          // Include any other user data from the response
+          token: response.data.token,
           ...response.data.user
         };
         
-        localStorage.setItem('user', JSON.stringify(userData));
-        localStorage.setItem('token', response.data.token || 'dummy-token'); // Replace with actual token from API
-        
-        // Redirect to account page
-        navigate('/account');
+        setUserData(user);
+        setIsLoggedIn(true);
       }
       
       setForm({ name: "", email: "", password: "" });
     } catch (error) {
       console.error("Request failed:", error);
       if (error.response) {
-        alert(error.response.data.message || "Something went wrong");
+        alert(error.response.data.message || error.response.data.error || "Something went wrong");
       } else {
-        alert("Network error. Please try again.");
+        alert("Network error. Please check if the server is running.");
       }
     } finally {
       setLoading(false);
     }
+  }
+
+  function handleLogout() {
+    setIsLoggedIn(false);
+    setUserData(null);
+    setForm({ name: "", email: "", password: "" });
+  }
+
+  // If logged in, show account page
+  if (isLoggedIn && userData) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black text-white px-6">
+        <div className="w-full max-w-2xl p-8 rounded-2xl bg-white/5 border border-white/10">
+          <div className="text-center mb-8">
+            <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-white text-black flex items-center justify-center font-bold text-2xl">
+              {userData.name?.[0]?.toUpperCase() || 'U'}
+            </div>
+            <h1 className="text-3xl font-bold mb-2">Welcome back!</h1>
+            <p className="text-gray-400">{userData.email}</p>
+          </div>
+
+          <div className="space-y-4 mb-8">
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <p className="text-sm text-gray-400 mb-1">Name</p>
+              <p className="text-lg font-semibold">{userData.name}</p>
+            </div>
+            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+              <p className="text-sm text-gray-400 mb-1">Email</p>
+              <p className="text-lg font-semibold">{userData.email}</p>
+            </div>
+          </div>
+
+          <button
+            onClick={handleLogout}
+            className="w-full py-3 rounded-full bg-white text-black font-semibold hover:opacity-90 transition"
+          >
+            Sign out
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -146,7 +199,7 @@ export default function BlackWhiteSignPage() {
                 onChange={handleChange}
                 type={showPassword ? "text" : "password"}
                 required
-                minLength="6"
+                minLength="8"
                 className="mt-2 w-full p-3 rounded-lg bg-black/40 border border-white/10 focus:outline-none focus:border-white/30 transition"
                 placeholder="••••••••"
                 autoComplete="current-password"

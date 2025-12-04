@@ -1,16 +1,18 @@
-import React from "react";
-import { Trash2, Plus, Minus } from "lucide-react";
-import { useCart } from "./CartContext"; // path as needed
+import React, { useState } from "react";
+import { Trash2, Plus, Minus, CreditCard, Smartphone, Home } from "lucide-react";
+import { useCart } from "./CartContext";
 
 export default function CartPage() {
   const { cart, updateQty, removeItem } = useCart();
+  const [showPayment, setShowPayment] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("card");
 
   const subtotal = cart.reduce((t, i) => t + i.price * i.qty, 0);
   const shipping = subtotal ? 99 : 0;
   const total = subtotal + shipping;
 
   return (
-    <div className="min-h-screen bg-white text-black p-6 flex justify-center">
+    <div className="min-h-screen bg-white text-black p-6 flex justify-center relative">
       <div className="w-full max-w-4xl space-y-8">
         <h1 className="text-3xl font-semibold">Your Cart</h1>
 
@@ -65,25 +67,172 @@ export default function CartPage() {
         {/* Summary */}
         <div className="p-6 border border-black/10 rounded-xl space-y-3">
           <h2 className="text-xl font-semibold mb-2">Order Summary</h2>
+
           <div className="flex justify-between opacity-80">
             <span>Subtotal</span>
             <span>₹ {subtotal.toLocaleString()}</span>
           </div>
+
           <div className="flex justify-between opacity-80">
             <span>Shipping</span>
             <span>₹ {shipping}</span>
           </div>
+
           <div className="border-t border-black/10 pt-3 flex justify-between font-medium text-lg">
             <span>Total</span>
             <span>₹ {total.toLocaleString()}</span>
           </div>
+
+          {/* Checkout Button */}
           <button
-            className="w-full mt-3 py-3 bg-black text-white rounded-lg text-center font-medium"
+            onClick={() => setShowPayment(true)}
+            className="w-full mt-3 py-3 bg-black text-white rounded-lg text-center font-medium hover:bg-gray-800 transition"
           >
             Checkout
           </button>
         </div>
       </div>
+
+      {/* Slide-in Payment Panel */}
+      <div
+        className={`fixed top-0 right-0 h-full w-full md:w-1/2 bg-white shadow-2xl transform transition-transform duration-300 ${
+          showPayment ? "translate-x-0" : "translate-x-full"
+        } flex flex-col p-6 z-50`}
+      >
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-semibold">Payment</h2>
+          <button
+            onClick={() => setShowPayment(false)}
+            className="text-black font-bold text-xl"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto space-y-6">
+
+          {/* Order Summary */}
+          <div className="border border-black/10 rounded-xl p-4">
+            <h3 className="font-semibold mb-2">Order Summary</h3>
+
+            <div className="flex justify-between">
+              <span>Subtotal</span>
+              <span>₹ {subtotal.toLocaleString()}</span>
+            </div>
+
+            <div className="flex justify-between">
+              <span>Shipping</span>
+              <span>₹ {shipping}</span>
+            </div>
+
+            <hr className="my-2 border-black/10" />
+
+            <div className="flex justify-between font-semibold text-lg">
+              <span>Total</span>
+              <span>₹ {total.toLocaleString()}</span>
+            </div>
+          </div>
+
+          {/* Payment Methods */}
+          <div className="border border-black/10 rounded-xl p-4 space-y-4">
+            <h3 className="font-semibold mb-3 text-center">Choose Payment Method</h3>
+
+            {/* Method Buttons */}
+            <div className="flex justify-center gap-2">
+              <button
+                onClick={() => setPaymentMethod("card")}
+                className={`px-3 py-1 flex items-center gap-1 border rounded-lg ${
+                  paymentMethod === "card"
+                    ? "bg-black text-white"
+                    : "bg-white border-black/20"
+                }`}
+              >
+                <CreditCard size={16} /> Card
+              </button>
+
+              <button
+                onClick={() => setPaymentMethod("upi")}
+                className={`px-3 py-1 flex items-center gap-1 border rounded-lg ${
+                  paymentMethod === "upi"
+                    ? "bg-black text-white"
+                    : "bg-white border-black/20"
+                }`}
+              >
+                <Smartphone size={16} /> UPI
+              </button>
+
+              <button
+                onClick={() => setPaymentMethod("cod")}
+                className={`px-3 py-1 flex items-center gap-1 border rounded-lg ${
+                  paymentMethod === "cod"
+                    ? "bg-black text-white"
+                    : "bg-white border-black/20"
+                }`}
+              >
+                <Home size={16} /> COD
+              </button>
+            </div>
+
+            {/* CARD FORM */}
+            {paymentMethod === "card" && (
+              <div className="space-y-3 p-3 border rounded-lg bg-black/5">
+                <input
+                  type="text"
+                  placeholder="Cardholder Name"
+                  className="w-full p-2 border rounded-lg"
+                />
+                <input
+                  type="text"
+                  placeholder="Card Number"
+                  className="w-full p-2 border rounded-lg"
+                />
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    type="text"
+                    placeholder="MM/YY"
+                    className="p-2 border rounded-lg"
+                  />
+                  <input
+                    type="text"
+                    placeholder="CVV"
+                    className="p-2 border rounded-lg"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* UPI FORM */}
+            {paymentMethod === "upi" && (
+              <div className="space-y-3 p-3 border rounded-lg bg-black/5">
+                <input
+                  type="text"
+                  placeholder="Enter UPI ID (example@bank)"
+                  className="w-full p-2 border rounded-lg"
+                />
+              </div>
+            )}
+
+            {/* COD */}
+            {paymentMethod === "cod" && (
+              <div className="p-3 text-center text-sm border rounded-lg bg-black/5">
+                Cash on Delivery is available for your location.
+              </div>
+            )}
+
+            <button className="w-full py-3 bg-black text-white rounded-lg font-semibold">
+              Pay ₹ {total.toLocaleString()}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Background Overlay */}
+      {showPayment && (
+        <div
+          onClick={() => setShowPayment(false)}
+          className="fixed inset-0 bg-black/40 z-40"
+        />
+      )}
     </div>
   );
 }
