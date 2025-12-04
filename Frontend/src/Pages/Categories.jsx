@@ -386,28 +386,7 @@ export default function CategoriesPage({ categories = sampleCategories }) {
                       </button>
 
                       {/* Expanded preview */}
-                      {selected === cat.id && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="mt-2 ml-2 mr-2 rounded-md overflow-hidden text-neutral-300 text-sm">
-                          <div className="p-3 border border-neutral-800 rounded-md bg-neutral-900/40">
-                            <p className="mb-2">Quick links:</p>
-                            <div className="flex gap-2 flex-wrap">
-                              <a className="text-xs py-1 px-2 rounded-md hover:bg-white/5 border border-neutral-800">
-                                Best Sellers
-                              </a>
-                              <a className="text-xs py-1 px-2 rounded-md hover:bg-white/5 border border-neutral-800">
-                                New In
-                              </a>
-                              <a className="text-xs py-1 px-2 rounded-md hover:bg-white/5 border border-neutral-800">
-                                Top Rated
-                              </a>
-                            </div>
-                          </div>
-                        </motion.div>
-                      )}
+
                     </motion.li>
                   ))}
                 </motion.ul>
