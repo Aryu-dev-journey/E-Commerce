@@ -1,6 +1,9 @@
 import React from "react";
 
 
+
+
+
 export default function Order() {
   const orders = [
     {
@@ -18,19 +21,6 @@ export default function Order() {
           name: "White Sneakers",
           image: "https://via.placeholder.com/100",
           price: "₹999",
-        },
-      ],
-    },
-    {
-      id: "ORD67890",
-      date: "10 Oct 2025",
-      status: "Shipped",
-      total: "₹1899",
-      items: [
-        {
-          name: "Graphic T-Shirt",
-          image: "https://via.placeholder.com/100",
-          price: "₹899",
         },
       ],
     },
