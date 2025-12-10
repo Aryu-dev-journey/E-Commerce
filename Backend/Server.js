@@ -11,6 +11,7 @@ const port = 3000;
 const subscribersModel = require("./model/subscribers");
 const userModel = require("./model/User");
 const Order = require("./model/orders")
+const ContactUs = require("./model/ContactUs")
 
 const productRoute = require("./Router/product.route");
 const featuredroute = require("./Router/Featured.route");
@@ -192,9 +193,11 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-app.post("/api/Order",  
-   [
-    body("email").isEmail().normalizeEmail(),
-    body("password").isLength({ min: 8 }),
-    body("name").trim().notEmpty(),
-  ],)
+// app.post("/api/Order",  
+//    [
+//     body("email").isEmail().normalizeEmail(),
+//     body("password").isLength({ min: 8 }),
+//     body("name").trim().notEmpty(),
+//   ],)
+
+
