@@ -1,5 +1,7 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useCart } from "./CartContext";
+import { useWishlist } from "./WishlistContext";
 
 const allCategories = [
   {
@@ -25,147 +27,147 @@ const allCategories = [
     slug: "home-living",
     icon: "home",
   },
-  { id: "6", name: "Electronics", items: 310, slug: "Electronics", icon: "chip" },
+  {
+    id: "6",
+    name: "Electronics",
+    items: 310,
+    slug: "electronics",
+    icon: "chip",
+  },
   { id: "7", name: "Beauty", items: 156, slug: "beauty", icon: "sparkle" },
   { id: "8", name: "Sale", items: 63, slug: "sale", icon: "tag" },
 ];
 
 function Icon({ name, className = "w-6 h-6" }) {
-  switch (name) {
-    case "box":
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-          <path
-            d="M21 16V8a2 2 0 0 0-1-1.732L13 2.268a2 2 0 0 0-2 0L4 6.268A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.732l7 4.464a2 2 0 0 0 2 0l7-4.464A2 2 0 0 0 21 16z"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-    case "shirt":
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-          <path
-            d="M3 7l2-2h3l1 1 1-1h4l1 1 1-1h3l2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-    case "shoe":
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-          <path
-            d="M2 16s2-4 8-4 8 4 8 4v2H2v-2z"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M6 12V6l3-2 3 2v6"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-    case "watch":
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-          <circle
-            cx="12"
-            cy="12"
-            r="6"
-            stroke="currentColor"
-            strokeWidth="1.5"
-          />
-          <path
-            d="M12 8v4l2 1"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-    case "home":
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-          <path
-            d="M3 11l9-7 9 7"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <path
-            d="M5 11v8a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1v-8"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-    case "chip":
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-          <rect
-            x="3"
-            y="3"
-            width="18"
-            height="18"
-            rx="2"
-            stroke="currentColor"
-            strokeWidth="1.5"
-          />
-          <rect
-            x="8"
-            y="8"
-            width="8"
-            height="8"
-            stroke="currentColor"
-            strokeWidth="1.2"
-          />
-        </svg>
-      );
-    case "sparkle":
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-          <path
-            d="M12 3l1.5 3 3 1.5-3 1.5L12 12l-1.5-3-3-1.5 3-1.5L12 3z"
-            stroke="currentColor"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      );
-    case "tag":
-      return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-          <path
-            d="M20 10v6a2 2 0 0 1-2 2h-6l-8-8 8-8h6a2 2 0 0 1 2 2v6z"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          <circle cx="9" cy="9" r="1" fill="currentColor" />
-        </svg>
-      );
-    default:
-      return null;
-  }
+  const icons = {
+    box: (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <path
+          d="M21 16V8a2 2 0 0 0-1-1.732L13 2.268a2 2 0 0 0-2 0L4 6.268A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.732l7 4.464a2 2 0 0 0 2 0l7-4.464A2 2 0 0 0 21 16z"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    shirt: (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <path
+          d="M3 7l2-2h3l1 1 1-1h4l1 1 1-1h3l2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    shoe: (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <path
+          d="M2 16s2-4 8-4 8 4 8 4v2H2v-2z"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M6 12V6l3-2 3 2v6"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    watch: (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="1.5" />
+        <path
+          d="M12 8v4l2 1"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    home: (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <path
+          d="M3 11l9-7 9 7"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M5 11v8a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1v-8"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    chip: (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <rect
+          x="3"
+          y="3"
+          width="18"
+          height="18"
+          rx="2"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+        <rect
+          x="8"
+          y="8"
+          width="8"
+          height="8"
+          stroke="currentColor"
+          strokeWidth="1.2"
+        />
+      </svg>
+    ),
+    sparkle: (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <path
+          d="M12 3l1.5 3 3 1.5-3 1.5L12 12l-1.5-3-3-1.5 3-1.5L12 3z"
+          stroke="currentColor"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    ),
+    tag: (
+      <svg className={className} viewBox="0 0 24 24" fill="none">
+        <path
+          d="M20 10v6a2 2 0 0 1-2 2h-6l-8-8 8-8h6a2 2 0 0 1 2 2v6z"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <circle cx="9" cy="9" r="1" fill="currentColor" />
+      </svg>
+    ),
+  };
+  return icons[name] || null;
 }
 
-function SlideMenu({ open, onClose, title, products, loading }) {
+function SlideMenu({
+  open,
+  onClose,
+  title,
+  products,
+  loading,
+  addToCart,
+  addToWishlist,
+  wishlist,
+}) {
   return (
     <AnimatePresence>
       {open && (
@@ -209,44 +211,65 @@ function SlideMenu({ open, onClose, title, products, loading }) {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {products.map((product, index) => (
-                    <motion.div
-                      key={product._id || product.id || index}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.05 }}
-                      className="flex flex-col gap-3 p-4 rounded-lg border border-neutral-800 hover:border-neutral-700 hover:bg-white/5 transition-colors cursor-pointer">
-                      <div className="flex-none w-full aspect-square bg-neutral-800 rounded-lg border border-neutral-700 overflow-hidden">
-                        {product.image || product.images?.[0] ? (
-                          <img
-                            src={product.image || product.images[0]}
-                            alt={product.name || product.title}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-xs text-neutral-500">
-                            No Image
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-sm font-medium truncate">
-                          {product.name || product.title || "Unnamed Product"}
-                        </h3>
-                        <p className="text-xs text-neutral-400 mt-1 line-clamp-2">
-                          {product.description || "No description available"}
-                        </p>
-                      </div>
-                      <div className="flex items-center justify-between pt-2 border-t border-neutral-800">
-                        <p className="text-sm font-semibold">
-                          ${product.price || "0.00"}
-                        </p>
-                        <p className="text-xs text-neutral-400">
-                          {product.stock > 0 ? "In stock" : "Out of stock"}
-                        </p>
-                      </div>
-                    </motion.div>
-                  ))}
+                  {products.map((product, index) => {
+                    const inWishlist = wishlist.some(
+                      (p) => p.id === product.id
+                    );
+                    return (
+                      <motion.div
+                        key={product.id} // unique key
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                        className="flex flex-col gap-3 p-4 rounded-lg border border-neutral-800 hover:border-neutral-700 hover:bg-white/5 transition-colors">
+                        <div className="flex-none w-full aspect-square bg-neutral-800 rounded-lg border border-neutral-700 overflow-hidden">
+                          {product.image || product.images?.[0] ? (
+                            <img
+                              src={product.image || product.images[0]}
+                              alt={product.name || product.title}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-xs text-neutral-500">
+                              No Image
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-sm font-medium truncate">
+                            {product.name || product.title || "Unnamed Product"}
+                          </h3>
+                          <p className="text-xs text-neutral-400 mt-1 line-clamp-2">
+                            {product.description || "No description available"}
+                          </p>
+                        </div>
+                        <div className="flex items-center justify-between pt-2 border-t border-neutral-800">
+                          <p className="text-sm font-semibold">
+                            ${product.price || "0.00"}
+                          </p>
+                          <p className="text-xs text-neutral-400">
+                            {product.stock > 0 ? "In stock" : "Out of stock"}
+                          </p>
+                        </div>
+                        <div className="flex gap-2 mt-3">
+                          <button
+                            onClick={() => addToCart(product)}
+                            className="flex-1 px-2 py-1 bg-white text-black rounded-md text-sm font-medium hover:bg-white/90 transition">
+                            Add to Cart
+                          </button>
+                          <button
+                            onClick={() => addToWishlist(product)}
+                            className={`flex-1 px-2 py-1 rounded-md text-sm font-medium border border-white/20 transition ${
+                              inWishlist
+                                ? "bg-white text-black"
+                                : "hover:bg-white/5 text-white"
+                            }`}>
+                            {inWishlist ? "Wishlisted" : "Wishlist"}
+                          </button>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               )}
             </div>
@@ -266,15 +289,15 @@ export default function CategoriesPage({ categories = allCategories }) {
   const [allProducts, setAllProducts] = useState([]);
   const [displayProducts, setDisplayProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(false);
+  const { addToCart } = useCart();
+  const { addToWishlist, wishlist } = useWishlist();
 
-  // ✅ Move selectedFilters inside the component
   const [selectedFilters, setSelectedFilters] = useState({
     onSale: false,
     new: false,
     exclusive: false,
   });
 
-  // Fetch all products
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
@@ -306,45 +329,42 @@ export default function CategoriesPage({ categories = allCategories }) {
     setLoadingProducts(true);
     setDisplayProducts([]);
 
-    setTimeout(() => {
-      const categoryName = cat.name.toLowerCase().replace(/[\s&]/g, "");
+    // Filter products immediately (removed setTimeout)
+    const categoryName = cat.name.toLowerCase().replace(/[\s&]/g, "");
+    const filteredProducts = allProducts.filter((product) => {
+      const identifiers = [
+        ...(product.category ? [product.category.toLowerCase()] : []),
+        ...(product.categories
+          ? product.categories.map((c) => c.toLowerCase())
+          : []),
+        ...(product.tags ? product.tags.map((t) => t.toLowerCase()) : []),
+        ...(product.slug ? [product.slug.toLowerCase()] : []),
+      ];
+      const normalized = identifiers.map((id) => id.replace(/[\s&]/g, ""));
+      const matchesCategory = normalized.some((id) =>
+        id.includes(categoryName)
+      );
 
-      const filteredProducts = allProducts.filter((product) => {
-        const identifiers = [];
-        if (product.category) identifiers.push(product.category.toLowerCase());
-        if (product.categories)
-          identifiers.push(...product.categories.map((c) => c.toLowerCase()));
-        if (product.tags)
-          identifiers.push(...product.tags.map((t) => t.toLowerCase()));
-        if (product.slug) identifiers.push(product.slug.toLowerCase());
+      let matchesFilters = true;
+      if (selectedFilters.onSale)
+        matchesFilters = matchesFilters && product.onSale;
+      if (selectedFilters.new) matchesFilters = matchesFilters && product.isNew;
+      if (selectedFilters.exclusive)
+        matchesFilters = matchesFilters && product.isExclusive;
 
-        const normalized = identifiers.map((id) => id.replace(/[\s&]/g, ""));
-        const matchesCategory = normalized.some((id) =>
-          id.includes(categoryName)
-        );
+      return matchesCategory && matchesFilters;
+    });
 
-        let matchesFilters = true;
-        if (selectedFilters.onSale)
-          matchesFilters = matchesFilters && product.onSale;
-        if (selectedFilters.new)
-          matchesFilters = matchesFilters && product.isNew;
-        if (selectedFilters.exclusive)
-          matchesFilters = matchesFilters && product.isExclusive;
+    const sortedProducts = filteredProducts.sort((a, b) => {
+      if (sort === "popular") return (b.sales || 0) - (a.sales || 0);
+      if (sort === "alpha") return (a.name || "").localeCompare(b.name || "");
+      if (sort === "newest")
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      return 0;
+    });
 
-        return matchesCategory && matchesFilters;
-      });
-
-      const sortedProducts = filteredProducts.sort((a, b) => {
-        if (sort === "popular") return (b.sales || 0) - (a.sales || 0);
-        if (sort === "alpha") return (a.name || "").localeCompare(b.name || "");
-        if (sort === "newest")
-          return new Date(b.createdAt) - new Date(a.createdAt);
-        return 0;
-      });
-
-      setDisplayProducts(sortedProducts);
-      setLoadingProducts(false);
-    }, 300);
+    setDisplayProducts(sortedProducts);
+    setLoadingProducts(false);
   };
 
   return (
@@ -415,45 +435,26 @@ export default function CategoriesPage({ categories = allCategories }) {
           <aside className="lg:col-span-1 bg-neutral-850 border border-neutral-800 p-4 rounded-xl h-fit">
             <h3 className="text-sm font-medium mb-3">Filters</h3>
             <div className="space-y-2 text-sm text-neutral-300">
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  className="accent-neutral-400"
-                  checked={selectedFilters.onSale}
-                  onChange={() =>
-                    setSelectedFilters((prev) => ({
-                      ...prev,
-                      onSale: !prev.onSale,
-                    }))
-                  }
-                />
-                <span>On sale</span>
-              </label>
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  className="accent-neutral-400"
-                  checked={selectedFilters.new}
-                  onChange={() =>
-                    setSelectedFilters((prev) => ({ ...prev, new: !prev.new }))
-                  }
-                />
-                <span>New</span>
-              </label>
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  className="accent-neutral-400"
-                  checked={selectedFilters.exclusive}
-                  onChange={() =>
-                    setSelectedFilters((prev) => ({
-                      ...prev,
-                      exclusive: !prev.exclusive,
-                    }))
-                  }
-                />
-                <span>Exclusive</span>
-              </label>
+              {["onSale", "new", "exclusive"].map((filter) => (
+                <label key={filter} className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    className="accent-neutral-400"
+                    checked={selectedFilters[filter]}
+                    onChange={() =>
+                      setSelectedFilters((prev) => ({
+                        ...prev,
+                        [filter]: !prev[filter],
+                      }))
+                    }
+                  />
+                  <span>
+                    {filter === "new"
+                      ? "New"
+                      : filter.charAt(0).toUpperCase() + filter.slice(1)}
+                  </span>
+                </label>
+              ))}
             </div>
           </aside>
 
@@ -520,6 +521,9 @@ export default function CategoriesPage({ categories = allCategories }) {
         title={drawerTitle}
         products={displayProducts}
         loading={loadingProducts}
+        addToCart={addToCart}
+        addToWishlist={addToWishlist}
+        wishlist={wishlist}
       />
     </div>
   );

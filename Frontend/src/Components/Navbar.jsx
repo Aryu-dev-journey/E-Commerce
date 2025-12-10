@@ -116,6 +116,13 @@ export default function Navbar() {
                     >
                       Orders
                     </Link>
+                    <Link
+                      to="/ContactUs"
+                      className="block px-4 py-2 text-sm hover:bg-gray-50"
+                      onClick={() => setAccountOpen(false)}
+                    >
+                      Contact Us
+                    </Link>
                   </div>
                 </div>
               )}

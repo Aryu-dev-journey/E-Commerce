@@ -8,6 +8,7 @@ import Login from "./Pages/Login";
 import AccountPage from "./Pages/Account";
 import ProductDetail from "./Pages/ProductDetail";
 import Order from "./Pages/Order";
+import ContactUs from "./Pages/ContactUs";
 import CartPage from "./Pages/Cartpage";
 import Wishlist from "./Pages/wishlist";
 
@@ -47,6 +48,10 @@ export default function App() {
     {
       path: "/Order",
       element : <><Navbar/> <Order/></>,
+    },
+    {
+      path: "/ContactUs",
+      element : <><Navbar/> <ContactUs/></>,
     },
     {
       path : "/Cartpage",

@@ -7,7 +7,7 @@ route.get("/Categorised", (req, res) => {
     // NEW ARRIVALS (10 products)
     // ==============================
     {
-      _id: 1,
+      id: 1,
       name: "Premium Wireless Headphones",
       title: "Premium Wireless Headphones",
       brand: "AudioTech",
@@ -33,7 +33,7 @@ route.get("/Categorised", (req, res) => {
       slug: "premium-wireless-headphones"
     },
     {
-      _id: 2,
+      id: 2,
       name: "Smart Fitness Watch",
       title: "Smart Fitness Watch",
       brand: "FitPro",
@@ -56,7 +56,7 @@ route.get("/Categorised", (req, res) => {
       slug: "smart-fitness-watch"
     },
     {
-      _id: 3,
+      id: 3,
       name: "Foldable Electric Scooter",
       title: "Foldable Electric Scooter",
       brand: "UrbanRide",
@@ -79,7 +79,7 @@ route.get("/Categorised", (req, res) => {
       slug: "foldable-electric-scooter"
     },
     {
-      _id: 4,
+      id: 4,
       name: "4K Action Camera",
       title: "4K Action Camera",
       brand: "AdventureCam",
@@ -102,7 +102,7 @@ route.get("/Categorised", (req, res) => {
       slug: "4k-action-camera"
     },
     {
-      _id: 5,
+      id: 5,
       name: "Ergonomic Office Chair",
       title: "Ergonomic Office Chair",
       brand: "WorkComfort",
@@ -125,7 +125,7 @@ route.get("/Categorised", (req, res) => {
       slug: "ergonomic-office-chair"
     },
     {
-      _id: 6,
+      id: 6,
       name: "Smart Home Hub",
       title: "Smart Home Hub",
       brand: "HomeConnect",
@@ -148,7 +148,7 @@ route.get("/Categorised", (req, res) => {
       slug: "smart-home-hub"
     },
     {
-      _id: 7,
+      id: 7,
       name: "UV Sanitizer Box",
       title: "UV Sanitizer Box",
       brand: "CleanTech",
@@ -171,7 +171,7 @@ route.get("/Categorised", (req, res) => {
       slug: "uv-sanitizer-box"
     },
     {
-      _id: 8,
+      id: 8,
       name: "Electric Kettle with Temperature Control",
       title: "Electric Kettle with Temperature Control",
       brand: "BrewPerfect",
@@ -194,7 +194,7 @@ route.get("/Categorised", (req, res) => {
       slug: "electric-kettle"
     },
     {
-      _id: 9,
+      id: 9,
       name: "Wireless Charging Pad",
       title: "Wireless Charging Pad",
       brand: "ChargeFast",
@@ -217,7 +217,7 @@ route.get("/Categorised", (req, res) => {
       slug: "wireless-charging-pad"
     },
     {
-      _id: 10,
+      id: 10,
       name: "Portable Air Purifier",
       title: "Portable Air Purifier",
       brand: "AirPure",
@@ -244,7 +244,7 @@ route.get("/Categorised", (req, res) => {
     // CLOTHING (10 products)
     // ==============================
     {
-      _id: 11,
+      id: 11,
       name: "Premium Cotton T-Shirt",
       title: "Premium Cotton T-Shirt",
       brand: "UrbanWear",
@@ -267,7 +267,7 @@ route.get("/Categorised", (req, res) => {
       slug: "premium-cotton-tshirt"
     },
     {
-      _id: 12,
+      id: 12,
       name: "Denim Jacket",
       title: "Classic Denim Jacket",
       brand: "DenimCo",
@@ -290,7 +290,7 @@ route.get("/Categorised", (req, res) => {
       slug: "denim-jacket"
     },
     {
-      _id: 13,
+      id: 13,
       name: "Wool Blend Sweater",
       title: "Warm Wool Blend Sweater",
       brand: "CozyKnits",
@@ -313,7 +313,7 @@ route.get("/Categorised", (req, res) => {
       slug: "wool-blend-sweater"
     },
     {
-      _id: 14,
+      id: 14,
       name: "Linen Button-Down Shirt",
       title: "Linen Button-Down Shirt",
       brand: "NaturalFabrics",
@@ -336,7 +336,7 @@ route.get("/Categorised", (req, res) => {
       slug: "linen-shirt"
     },
     {
-      _id: 15,
+      id: 15,
       name: "Athletic Joggers",
       title: "Athletic Joggers",
       brand: "ActiveWear",
@@ -359,7 +359,7 @@ route.get("/Categorised", (req, res) => {
       slug: "athletic-joggers"
     },
     {
-      _id: 16,
+      id: 16,
       name: "Leather Moto Jacket",
       title: "Leather Moto Jacket",
       brand: "RebelStyle",
@@ -382,7 +382,7 @@ route.get("/Categorised", (req, res) => {
       slug: "leather-moto-jacket"
     },
     {
-      _id: 17,
+      id: 17,
       name: "Cashmere Scarf",
       title: "Luxury Cashmere Scarf",
       brand: "WinterLux",
@@ -405,7 +405,7 @@ route.get("/Categorised", (req, res) => {
       slug: "cashmere-scarf"
     },
     {
-      _id: 18,
+      id: 18,
       name: "Chino Pants",
       title: "Classic Chino Pants",
       brand: "SmartCasual",
@@ -428,7 +428,7 @@ route.get("/Categorised", (req, res) => {
       slug: "chino-pants"
     },
     {
-      _id: 19,
+      id: 19,
       name: "Hooded Sweatshirt",
       title: "Hooded Sweatshirt",
       brand: "ComfortZone",
@@ -451,7 +451,7 @@ route.get("/Categorised", (req, res) => {
       slug: "hooded-sweatshirt"
     },
     {
-      _id: 20,
+      id: 20,
       name: "Evening Dress",
       title: "Elegant Evening Dress",
       brand: "NightElegance",
@@ -478,7 +478,7 @@ route.get("/Categorised", (req, res) => {
     // FOOTWEAR (10 products)
     // ==============================
     {
-      _id: 21,
+      id: 21,
       name: "Running Sneakers",
       title: "Performance Running Sneakers",
       brand: "RunFast",
@@ -501,7 +501,7 @@ route.get("/Categorised", (req, res) => {
       slug: "running-sneakers"
     },
     {
-      _id: 22,
+      id: 22,
       name: "Leather Boots",
       title: "Classic Leather Boots",
       brand: "LeatherCraft",
@@ -524,7 +524,7 @@ route.get("/Categorised", (req, res) => {
       slug: "leather-boots"
     },
     {
-      _id: 23,
+      id: 23,
       name: "Casual Slip-Ons",
       title: "Casual Slip-Ons",
       brand: "EasyWear",
@@ -547,7 +547,7 @@ route.get("/Categorised", (req, res) => {
       slug: "casual-slip-ons"
     },
     {
-      _id: 24,
+      id: 24,
       name: "Hiking Boots",
       title: "Waterproof Hiking Boots",
       brand: "TrailMaster",
@@ -570,7 +570,7 @@ route.get("/Categorised", (req, res) => {
       slug: "hiking-boots"
     },
     {
-      _id: 25,
+      id: 25,
       name: "Formal Dress Shoes",
       title: "Formal Dress Shoes",
       brand: "ElegantStep",
@@ -593,7 +593,7 @@ route.get("/Categorised", (req, res) => {
       slug: "formal-dress-shoes"
     },
     {
-      _id: 26,
+      id: 26,
       name: "Basketball Shoes",
       title: "Performance Basketball Shoes",
       brand: "JumpHigh",
@@ -616,7 +616,7 @@ route.get("/Categorised", (req, res) => {
       slug: "basketball-shoes"
     },
     {
-      _id: 27,
+      id: 27,
       name: "Sandals",
       title: "Comfortable Sandals",
       brand: "SummerWalk",
@@ -639,7 +639,7 @@ route.get("/Categorised", (req, res) => {
       slug: "comfortable-sandals"
     },
     {
-      _id: 28,
+      id: 28,
       name: "Platform Sneakers",
       title: "Platform Sneakers",
       brand: "UrbanHeight",
@@ -662,7 +662,7 @@ route.get("/Categorised", (req, res) => {
       slug: "platform-sneakers"
     },
     {
-      _id: 29,
+      id: 29,
       name: "Trail Running Shoes",
       title: "Trail Running Shoes",
       brand: "MountainRun",
@@ -685,7 +685,7 @@ route.get("/Categorised", (req, res) => {
       slug: "trail-running-shoes"
     },
     {
-      _id: 30,
+      id: 30,
       name: "Slides",
       title: "Comfort Slides",
       brand: "RelaxFeet",
@@ -712,7 +712,7 @@ route.get("/Categorised", (req, res) => {
     // ACCESSORIES (10 products)
     // ==============================
     {
-      _id: 31,
+      id: 31,
       name: "Minimalist Watch",
       title: "Minimalist Stainless Steel Watch",
       brand: "TimeCraft",
@@ -735,7 +735,7 @@ route.get("/Categorised", (req, res) => {
       slug: "minimalist-watch"
     },
     {
-      _id: 32,
+      id: 32,
       name: "Leather Messenger Bag",
       title: "Professional Leather Messenger Bag",
       brand: "UrbanGear",
@@ -758,7 +758,7 @@ route.get("/Categorised", (req, res) => {
       slug: "leather-messenger-bag"
     },
     {
-      _id: 33,
+      id: 33,
       name: "Aviator Sunglasses",
       title: "Classic Aviator Sunglasses",
       brand: "SunShield",
@@ -781,7 +781,7 @@ route.get("/Categorised", (req, res) => {
       slug: "aviator-sunglasses"
     },
     {
-      _id: 34,
+      id: 34,
       name: "Silver Necklace",
       title: "Silver Necklace",
       brand: "JewelCraft",
@@ -804,7 +804,7 @@ route.get("/Categorised", (req, res) => {
       slug: "silver-necklace"
     },
     {
-      _id: 35,
+      id: 35,
       name: "Leather Wallet",
       title: "Genuine Leather Wallet",
       brand: "LeatherWorks",
@@ -827,7 +827,7 @@ route.get("/Categorised", (req, res) => {
       slug: "leather-wallet"
     },
     {
-      _id: 36,
+      id: 36,
       name: "Smart Ring",
       title: "Smart Ring with Fitness Tracking",
       brand: "WearTech",
@@ -850,7 +850,7 @@ route.get("/Categorised", (req, res) => {
       slug: "smart-ring"
     },
     {
-      _id: 37,
+      id: 37,
       name: "Canvas Backpack",
       title: "Canvas Backpack",
       brand: "EverydayCarry",
@@ -873,7 +873,7 @@ route.get("/Categorised", (req, res) => {
       slug: "canvas-backpack"
     },
     {
-      _id: 38,
+      id: 38,
       name: "Silk Tie",
       title: "Silk Tie",
       brand: "FormalAttire",
@@ -896,7 +896,7 @@ route.get("/Categorised", (req, res) => {
       slug: "silk-tie"
     },
     {
-      _id: 39,
+      id: 39,
       name: "Belt",
       title: "Genuine Leather Belt",
       brand: "LeatherCraft",
@@ -919,7 +919,7 @@ route.get("/Categorised", (req, res) => {
       slug: "leather-belt"
     },
     {
-      _id: 40,
+      id: 40,
       name: "Earrings",
       title: "Gold Earrings",
       brand: "GoldStyle",
@@ -946,7 +946,7 @@ route.get("/Categorised", (req, res) => {
     // HOME & LIVING (10 products)
     // ==============================
     {
-      _id: 41,
+      id: 41,
       name: "Ceramic Table Lamp",
       title: "Modern Ceramic Table Lamp",
       brand: "HomeGlow",
@@ -969,7 +969,7 @@ route.get("/Categorised", (req, res) => {
       slug: "ceramic-table-lamp"
     },
     {
-      _id: 42,
+      id: 42,
       name: "Organic Cotton Bed Sheets",
       title: "Luxury Organic Cotton Bed Sheets",
       brand: "SleepWell",
@@ -992,7 +992,7 @@ route.get("/Categorised", (req, res) => {
       slug: "organic-cotton-bed-sheets"
     },
     {
-      _id: 43,
+      id: 43,
       name: "Wooden Coffee Table",
       title: "Solid Wood Coffee Table",
       brand: "NaturalWood",
@@ -1015,7 +1015,7 @@ route.get("/Categorised", (req, res) => {
       slug: "wooden-coffee-table"
     },
     {
-      _id: 44,
+      id: 44,
       name: "Wall Art Canvas",
       title: "Abstract Wall Art Canvas",
       brand: "ArtisticHome",
@@ -1038,7 +1038,7 @@ route.get("/Categorised", (req, res) => {
       slug: "wall-art-canvas"
     },
     {
-      _id: 45,
+      id: 45,
       name: "Ceramic Dinner Set",
       title: "Ceramic Dinner Set",
       brand: "TableStyle",
@@ -1061,7 +1061,7 @@ route.get("/Categorised", (req, res) => {
       slug: "ceramic-dinner-set"
     },
     {
-      _id: 46,
+      id: 46,
       name: "Area Rug",
       title: "Wool Area Rug",
       brand: "FloorComfort",
@@ -1084,7 +1084,7 @@ route.get("/Categorised", (req, res) => {
       slug: "wool-area-rug"
     },
     {
-      _id: 47,
+      id: 47,
       name: "Throw Pillows Set",
       title: "Decorative Throw Pillows Set",
       brand: "CozyHome",
@@ -1107,7 +1107,7 @@ route.get("/Categorised", (req, res) => {
       slug: "throw-pillows-set"
     },
     {
-      _id: 48,
+      id: 48,
       name: "Smart Thermostat",
       title: "Smart Thermostat",
       brand: "HomeSmart",
@@ -1130,7 +1130,7 @@ route.get("/Categorised", (req, res) => {
       slug: "smart-thermostat"
     },
     {
-      _id: 49,
+      id: 49,
       name: "Glass Vase",
       title: "Handblown Glass Vase",
       brand: "GlassArt",
@@ -1153,7 +1153,7 @@ route.get("/Categorised", (req, res) => {
       slug: "glass-vase"
     },
     {
-      _id: 50,
+      id: 50,
       name: "Kitchen Knife Set",
       title: "Professional Kitchen Knife Set",
       brand: "ChefTools",
@@ -1180,7 +1180,7 @@ route.get("/Categorised", (req, res) => {
     // ELECTRONICS (10 products)
     // ==============================
     {
-      _id: 51,
+      id: 51,
       name: "Smartphone Pro",
       title: "Latest Smartphone Pro",
       brand: "TechGadget",
@@ -1203,7 +1203,7 @@ route.get("/Categorised", (req, res) => {
       slug: "smartphone-pro"
     },
     {
-      _id: 52,
+      id: 52,
       name: "Gaming Laptop",
       title: "High-Performance Gaming Laptop",
       brand: "GameMaster",
@@ -1226,7 +1226,7 @@ route.get("/Categorised", (req, res) => {
       slug: "gaming-laptop"
     },
     {
-      _id: 53,
+      id: 53,
       name: "Wireless Earbuds",
       title: "True Wireless Earbuds",
       brand: "SoundFree",
@@ -1249,7 +1249,7 @@ route.get("/Categorised", (req, res) => {
       slug: "wireless-earbuds"
     },
     {
-      _id: 54,
+      id: 54,
       name: "4K Smart TV",
       title: "55-inch 4K Smart TV",
       brand: "VisionTech",
@@ -1272,7 +1272,7 @@ route.get("/Categorised", (req, res) => {
       slug: "4k-smart-tv"
     },
     {
-      _id: 55,
+      id: 55,
       name: "Tablet",
       title: "10-inch Tablet",
       brand: "TabTech",
@@ -1295,7 +1295,7 @@ route.get("/Categorised", (req, res) => {
       slug: "10-inch-tablet"
     },
     {
-      _id: 56,
+      id: 56,
       name: "Smart Speaker",
       title: "Smart Speaker with Voice Assistant",
       brand: "VoiceHome",
@@ -1318,7 +1318,7 @@ route.get("/Categorised", (req, res) => {
       slug: "smart-speaker"
     },
     {
-      _id: 57,
+      id: 57,
       name: "Gaming Console",
       title: "Next-Gen Gaming Console",
       brand: "GameBox",
@@ -1341,7 +1341,7 @@ route.get("/Categorised", (req, res) => {
       slug: "gaming-console"
     },
     {
-      _id: 58,
+      id: 58,
       name: "External SSD",
       title: "1TB External SSD",
       brand: "DataFast",
@@ -1364,7 +1364,7 @@ route.get("/Categorised", (req, res) => {
       slug: "external-ssd"
     },
     {
-      _id: 59,
+      id: 59,
       name: "Monitor",
       title: "27-inch 4K Monitor",
       brand: "DisplayPro",
@@ -1387,7 +1387,7 @@ route.get("/Categorised", (req, res) => {
       slug: "4k-monitor"
     },
     {
-      _id: 60,
+      id: 60,
       name: "Drone",
       title: "4K Camera Drone",
       brand: "SkyView",
@@ -1414,7 +1414,7 @@ route.get("/Categorised", (req, res) => {
     // BEAUTY (10 products)
     // ==============================
     {
-      _id: 61,
+      id: 61,
       name: "Vitamin C Serum",
       title: "Brightening Vitamin C Serum",
       brand: "SkinGlow",
@@ -1437,7 +1437,7 @@ route.get("/Categorised", (req, res) => {
       slug: "vitamin-c-serum"
     },
     {
-      _id: 62,
+      id: 62,
       name: "Matte Lipstick Set",
       title: "Luxury Matte Lipstick Set",
       brand: "LipLuxe",
@@ -1460,7 +1460,7 @@ route.get("/Categorised", (req, res) => {
       slug: "matte-lipstick-set"
     },
     {
-      _id: 63,
+      id: 63,
       name: "Hyaluronic Acid Moisturizer",
       title: "Hyaluronic Acid Moisturizer",
       brand: "HydraSkin",
@@ -1483,7 +1483,7 @@ route.get("/Categorised", (req, res) => {
       slug: "hyaluronic-acid-moisturizer"
     },
     {
-      _id: 64,
+      id: 64,
       name: "Eyeshadow Palette",
       title: "Professional Eyeshadow Palette",
       brand: "ColorArt",
@@ -1506,7 +1506,7 @@ route.get("/Categorised", (req, res) => {
       slug: "eyeshadow-palette"
     },
     {
-      _id: 65,
+      id: 65,
       name: "Sunscreen SPF 50",
       title: "Mineral Sunscreen SPF 50",
       brand: "SunSafe",
@@ -1529,7 +1529,7 @@ route.get("/Categorised", (req, res) => {
       slug: "sunscreen-spf-50"
     },
     {
-      _id: 66,
+      id: 66,
       name: "Face Mask Set",
       title: "Sheet Face Mask Set",
       brand: "SkinRefresh",
@@ -1552,7 +1552,7 @@ route.get("/Categorised", (req, res) => {
       slug: "face-mask-set"
     },
     {
-      _id: 67,
+      id: 67,
       name: "Makeup Brush Set",
       title: "Professional Makeup Brush Set",
       brand: "BrushCraft",
@@ -1575,7 +1575,7 @@ route.get("/Categorised", (req, res) => {
       slug: "makeup-brush-set"
     },
     {
-      _id: 68,
+      id: 68,
       name: "Perfume",
       title: "Signature Perfume",
       brand: "ScentLux",
@@ -1598,7 +1598,7 @@ route.get("/Categorised", (req, res) => {
       slug: "signature-perfume"
     },
     {
-      _id: 69,
+      id: 69,
       name: "Nail Polish Set",
       title: "Gel Nail Polish Set",
       brand: "NailStyle",
@@ -1621,7 +1621,7 @@ route.get("/Categorised", (req, res) => {
       slug: "nail-polish-set"
     },
     {
-      _id: 70,
+      id: 70,
       name: "Retinol Night Cream",
       title: "Anti-Aging Retinol Night Cream",
       brand: "AgeDefy",
@@ -1648,7 +1648,7 @@ route.get("/Categorised", (req, res) => {
     // SALE (10 products)
     // ==============================
     {
-      _id: 71,
+      id: 71,
       name: "Winter Coat",
       title: "Heavy Duty Winter Coat",
       brand: "WarmStyle",
@@ -1672,7 +1672,7 @@ route.get("/Categorised", (req, res) => {
       slug: "winter-coat"
     },
     {
-      _id: 72,
+      id: 72,
       name: "Coffee Maker",
       title: "Automatic Coffee Maker",
       brand: "BrewMaster",
@@ -1696,7 +1696,7 @@ route.get("/Categorised", (req, res) => {
       slug: "coffee-maker"
     },
     {
-      _id: 73,
+      id: 73,
       name: "Blender",
       title: "High-Speed Blender",
       brand: "BlendPro",
@@ -1720,7 +1720,7 @@ route.get("/Categorised", (req, res) => {
       slug: "high-speed-blender"
     },
     {
-      _id: 74,
+      id: 74,
       name: "Yoga Mat",
       title: "Premium Yoga Mat",
       brand: "YogaLife",
@@ -1744,7 +1744,7 @@ route.get("/Categorised", (req, res) => {
       slug: "yoga-mat"
     },
     {
-      _id: 75,
+      id: 75,
       name: "Desk Chair",
       title: "Ergonomic Desk Chair",
       brand: "OfficeComfort",
@@ -1768,7 +1768,7 @@ route.get("/Categorised", (req, res) => {
       slug: "desk-chair"
     },
     {
-      _id: 76,
+      id: 76,
       name: "Portable Speaker",
       title: "Bluetooth Portable Speaker",
       brand: "SoundGo",
@@ -1792,7 +1792,7 @@ route.get("/Categorised", (req, res) => {
       slug: "portable-speaker"
     },
     {
-      _id: 77,
+      id: 77,
       name: "Dumbbell Set",
       title: "Adjustable Dumbbell Set",
       brand: "FitGear",
@@ -1816,7 +1816,7 @@ route.get("/Categorised", (req, res) => {
       slug: "dumbbell-set"
     },
     {
-      _id: 78,
+      id: 78,
       name: "Cookware Set",
       title: "Non-Stick Cookware Set",
       brand: "KitchenPro",
@@ -1840,7 +1840,7 @@ route.get("/Categorised", (req, res) => {
       slug: "cookware-set"
     },
     {
-      _id: 79,
+      id: 79,
       name: "Backpack",
       title: "Travel Backpack",
       brand: "TravelGear",
@@ -1864,7 +1864,7 @@ route.get("/Categorised", (req, res) => {
       slug: "travel-backpack"
     },
     {
-      _id: 80,
+      id: 80,
       name: "Desk Lamp",
       title: "LED Desk Lamp",
       brand: "LightWorks",
