@@ -24,6 +24,6 @@ const ContactUsSchema = new mongoose.Schema({
     }
 })
 
-const ContactUs = mongoose.model("subscribers", ContactUsSchema)
+const ContactUs = mongoose.model("ContactUS", ContactUsSchema)
 
 module.exports = ContactUs

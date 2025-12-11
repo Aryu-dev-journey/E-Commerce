@@ -21,9 +21,9 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-start min-h-screen bg-black text-white px-6">
       {/* Spline bot added */}
-      {/* <div className="w-full max-w-6xl mx-auto mb-10">
+      <div className="w-full max-w-6xl mx-auto mb-10">
         <Spline scene="https://prod.spline.design/o9eNrUZbrQagGdEw/scene.splinecode" />
-      </div> */}
+      </div> 
 
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center text-center -mt-5">
