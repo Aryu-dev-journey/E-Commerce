@@ -52,6 +52,27 @@ app.post("/api/newsLetter", (req, res) => {
     );
 });
 
+app.post("/api/ContactUs", async (req, res) => {
+  try {
+    const { name, email, order, subject, message } = req.body;
+
+    const contact = await ContactUs.create({
+      name,
+      email,
+      orderNumber: order,
+      subject,
+      message,
+    });
+
+    res.status(201).json({ message: "Saved", contact });
+  } catch (err) {
+    console.error("ContactUs error:", err);
+    res.status(500).json({ error: "Failed to save message" });
+  }
+});
+
+
+
 // Registration with password hashing
 app.post(
   "/api/register",
