@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Spline from "@splinetool/react-spline";
 
 export default function BlackWhiteSignPage() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -51,27 +52,33 @@ export default function BlackWhiteSignPage() {
         : "http://localhost:3000/api/login";
 
       const response = await axios.post(endpoint, form);
-      
+
       if (response.status === 200 || response.status === 201) {
         alert(isSignUp ? "Registration successful" : "Login successful");
-        
+
         // Store user data in React state (NOT localStorage)
         const user = {
-          name: isSignUp ? form.name : response.data.user?.name || form.email.split('@')[0],
+          name: isSignUp
+            ? form.name
+            : response.data.user?.name || form.email.split("@")[0],
           email: form.email,
           token: response.data.token,
-          ...response.data.user
+          ...response.data.user,
         };
-        
+
         setUserData(user);
         setIsLoggedIn(true);
       }
-      
+
       setForm({ name: "", email: "", password: "" });
     } catch (error) {
       console.error("Request failed:", error);
       if (error.response) {
-        alert(error.response.data.message || error.response.data.error || "Something went wrong");
+        alert(
+          error.response.data.message ||
+            error.response.data.error ||
+            "Something went wrong"
+        );
       } else {
         alert("Network error. Please check if the server is running.");
       }
@@ -89,33 +96,54 @@ export default function BlackWhiteSignPage() {
   // If logged in, show account page
   if (isLoggedIn && userData) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black text-white px-6">
-        <div className="w-full max-w-2xl p-8 rounded-2xl bg-white/5 border border-white/10">
+      <div className="min-h-screen bg-black flex items-center justify-between px-8 text-white">
+       
+            <div className="w-full max-w-6xl mx-auto mb-10">
+              <Spline scene="https://prod.spline.design/o9eNrUZbrQagGdEw/scene.splinecode" />
+            </div>
+
+        {/* Right Profile Section */}
+        <div className="w-full max-w-xl p-10 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl flex flex-col">
+
+          {/* Profile Header */}
           <div className="text-center mb-8">
-            <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-white text-black flex items-center justify-center font-bold text-2xl">
-              {userData.name?.[0]?.toUpperCase() || 'U'}
+            <div className="w-24 h-20 mx-auto mb-5 rounded-full bg-white text-black flex items-center justify-center text-4xl font-bold shadow-md">
+              {userData.name?.[0]?.toUpperCase() || "U"}
             </div>
-            <h1 className="text-3xl font-bold mb-2">Welcome back!</h1>
-            <p className="text-gray-400">{userData.email}</p>
+
+            <h1 className="text-4xl font-extrabold tracking-tight">
+              Welcome back
+            </h1>
+            <p className="mt-2 text-gray-400 text-sm">{userData.email}</p>
           </div>
 
-          <div className="space-y-4 mb-8">
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <p className="text-sm text-gray-400 mb-1">Name</p>
-              <p className="text-lg font-semibold">{userData.name}</p>
+          {/* User Info Grid */}
+          <div className="grid grid-cols-1 gap-6 mb-10">
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+              <p className="text-xs uppercase tracking-wide text-gray-500 mb-2">
+                Name
+              </p>
+              <p className="text-xl font-semibold">{userData.name}</p>
             </div>
-            <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <p className="text-sm text-gray-400 mb-1">Email</p>
-              <p className="text-lg font-semibold">{userData.email}</p>
+
+            <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
+              <p className="text-xs uppercase tracking-wide text-gray-500 mb-2">
+                Email
+              </p>
+              <p className="text-xl font-semibold">{userData.email}</p>
             </div>
           </div>
 
+          {/* Actions */}
           <button
             onClick={handleLogout}
-            className="w-full py-3 rounded-full bg-white text-black font-semibold hover:opacity-90 transition"
-          >
-            Sign out
+            className="w-full py-4 rounded-full bg-white text-black font-semibold text-lg hover:bg-gray-200 transition shadow-md">
+            Sign Out
           </button>
+
+          <p className="mt-6 text-center text-xs text-gray-500">
+            © 2025 Monochrome
+          </p>
         </div>
       </div>
     );
@@ -124,11 +152,12 @@ export default function BlackWhiteSignPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white px-6">
       <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-
         {/* Left Section */}
         <aside className="hidden md:flex flex-col justify-center items-start gap-6 p-8 rounded-2xl bg-white/5 border border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center font-bold">M</div>
+            <div className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center font-bold">
+              M
+            </div>
           </div>
 
           <h3 className="text-3xl font-bold leading-tight">
@@ -157,8 +186,7 @@ export default function BlackWhiteSignPage() {
 
             <button
               onClick={() => setIsSignUp((s) => !s)}
-              className="text-sm py-1 px-3 rounded-full border border-white/20 hover:bg-white/5 transition"
-            >
+              className="text-sm py-1 px-3 rounded-full border border-white/20 hover:bg-white/5 transition">
               {isSignUp ? "Have an account?" : "Create account"}
             </button>
           </div>
@@ -207,15 +235,15 @@ export default function BlackWhiteSignPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword((s) => !s)}
-                className="absolute right-3 top-9 text-xs opacity-70 hover:opacity-100 transition"
-              >
+                className="absolute right-3 top-9 text-xs opacity-70 hover:opacity-100 transition">
                 {showPassword ? "Hide" : "Show"}
               </button>
             </label>
 
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 text-sm text-gray-300">
-                <input type="checkbox" className="w-4 h-4" /> <span>Remember me</span>
+                <input type="checkbox" className="w-4 h-4" />{" "}
+                <span>Remember me</span>
               </label>
 
               {!isSignUp && (
@@ -229,34 +257,50 @@ export default function BlackWhiteSignPage() {
               type="submit"
               disabled={loading}
               className={`w-full py-3 rounded-full font-semibold shadow-sm transition ${
-                loading 
-                  ? 'bg-gray-400 cursor-not-allowed' 
-                  : 'bg-white text-black hover:opacity-95'
-              }`}
-            >
-              {loading ? "Please wait..." : isSignUp ? "Create account" : "Sign in"}
+                loading
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-white text-black hover:opacity-95"
+              }`}>
+              {loading
+                ? "Please wait..."
+                : isSignUp
+                ? "Create account"
+                : "Sign in"}
             </button>
 
             <div className="text-center text-sm text-gray-400">or</div>
 
             <div className="grid grid-cols-1 gap-3">
-              <button type="button" className="w-full py-3 rounded-full border border-white/10 bg-black/20 hover:bg-black/30 transition">
+              <button
+                type="button"
+                className="w-full py-3 rounded-full border border-white/10 bg-black/20 hover:bg-black/30 transition">
                 Continue with Google
               </button>
-              <button type="button" className="w-full py-3 rounded-full border border-white/10 bg-black/20 hover:bg-black/30 transition">
+              <button
+                type="button"
+                className="w-full py-3 rounded-full border border-white/10 bg-black/20 hover:bg-black/30 transition">
                 Continue with Apple
               </button>
             </div>
 
             <p className="text-xs text-gray-400 text-center mt-4">
-              By continuing you agree to our <a href="#" className="underline">Terms</a> and{" "}
-              <a href="#" className="underline">Privacy Policy</a>.
+              By continuing you agree to our{" "}
+              <a href="#" className="underline">
+                Terms
+              </a>{" "}
+              and{" "}
+              <a href="#" className="underline">
+                Privacy Policy
+              </a>
+              .
             </p>
           </form>
         </main>
       </div>
 
-      <footer className="absolute bottom-6 text-xs text-gray-600">© 2025 Monochrome</footer>
+      <footer className="absolute bottom-6 text-xs text-gray-600">
+        © 2025 Monochrome
+      </footer>
     </div>
   );
 }
