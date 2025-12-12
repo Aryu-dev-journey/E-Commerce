@@ -83,19 +83,19 @@ export default function ShopPage() {
                       Category
                     </label>
                     <div className="flex flex-wrap gap-2">
-                      {tags.map((t) => (
+                      {tags.map((item) => (
                         <button
-                          key={t}
+                          key={item}
                           onClick={() => {
-                            setActiveTag(t);
+                            setActiveTag(item);
                             setPage(1);
                           }}
                           className={`text-sm px-3 py-1 rounded-full border ${
-                            activeTag === t
+                            activeTag === item
                               ? "bg-black text-white border-black"
                               : "bg-white/80 text-black border-white/20"
                           }`}>
-                          {t}
+                          {item}
                         </button>
                       ))}
                     </div>
@@ -143,7 +143,7 @@ export default function ShopPage() {
               {/* Display fetched products */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {paginated.map((p) => (
-                  <Link to={`/Shop/${p.id}`}>
+                  <Link key={p.id} to={`/Shop/${p.id}`}>
                     <article
                       key={p.id}
                       className="bg-white text-black rounded-2xl shadow-md overflow-hidden">
@@ -211,7 +211,7 @@ export default function ShopPage() {
           </section>
         </main>
 
-        <footer className="border-t border-white/6 py-6 mt-12">
+        <footer className="border-item border-white/6 py-6 mt-12">
           <div className="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">
             © {new Date().getFullYear()} B&W Atelier — Crafted with restraint.
           </div>

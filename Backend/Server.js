@@ -17,6 +17,7 @@ const productRoute = require("./Router/product.route");
 const featuredroute = require("./Router/Featured.route");
 const BestSellings = require("./Router/Bestselling.route");
 const Categorised = require("./Router/Categorised.route")
+const payment = require("./Router/payment.route")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,6 +37,7 @@ app.use("/api", productRoute);
 app.use("/api", featuredroute);
 app.use("/api", BestSellings);
 app.use("/api",Categorised)
+app.use("/api/payment", payment)
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

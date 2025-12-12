@@ -1,37 +1,20 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/ecom");
-
 const OrderSchema = new mongoose.Schema({
-
-    name: 
-        { 
-         type: String,
-         required: true 
-        },
-    email:
-        { 
-         type: String,
-         required: true
-        },
-    Address:
-        {
-        type: String,
-        required: true,
-        },
-    Payment:
-        {
-        type: String,
-        required: true,
-        },
-    PaymentAddress:
-        {
-        type: String,
-        required: true, 
-        },
-
+  userId: String,
+  amount: Number,
+  items: [
+    {
+      id: String,
+      title: String,
+      price: Number,
+      qty: Number,
+      image: String
+    }
+  ],
+  razorpay_order_id: String,
+  razorpay_payment_id: String,
+  status: { type: String, default: "created" }
 });
 
-const Order = mongoose.model("Order", OrderSchema);
-
-module.exports = Order;
+module.exports = mongoose.model("Order", OrderSchema);
