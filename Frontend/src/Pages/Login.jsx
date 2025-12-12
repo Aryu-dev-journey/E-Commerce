@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Spline from "@splinetool/react-spline";
+import { useAuth } from "../../../Backend/context/AuthContext";
 
 export default function BlackWhiteSignPage() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState(null);
+
+  // Use AuthContext
+  const { login, register, user, logout } = useAuth();
 
   function handleChange(e) {
     setForm((s) => ({ ...s, [e.target.name]: e.target.value }));
@@ -18,103 +20,41 @@ export default function BlackWhiteSignPage() {
     e.preventDefault();
     setLoading(true);
 
-    // Basic validation
-    if (!form.email || !form.password) {
-      alert("Please fill in all fields");
-      setLoading(false);
-      return;
-    }
-
-    if (isSignUp && !form.name) {
-      alert("Please enter your name");
-      setLoading(false);
-      return;
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(form.email)) {
-      alert("Please enter a valid email address");
-      setLoading(false);
-      return;
-    }
-
-    // Password strength check
-    if (form.password.length < 8) {
-      alert("Password must be at least 8 characters long");
-      setLoading(false);
-      return;
-    }
-
     try {
-      const endpoint = isSignUp
-        ? "http://localhost:3000/api/register"
-        : "http://localhost:3000/api/login";
-
-      const response = await axios.post(endpoint, form);
-
-      if (response.status === 200 || response.status === 201) {
-        alert(isSignUp ? "Registration successful" : "Login successful");
-
-        // Store user data in React state (NOT localStorage)
-        const user = {
-          name: isSignUp
-            ? form.name
-            : response.data.user?.name || form.email.split("@")[0],
-          email: form.email,
-          token: response.data.token,
-          ...response.data.user,
-        };
-
-        setUserData(user);
-        setIsLoggedIn(true);
-      }
-
-      setForm({ name: "", email: "", password: "" });
-    } catch (error) {
-      console.error("Request failed:", error);
-      if (error.response) {
-        alert(
-          error.response.data.message ||
-            error.response.data.error ||
-            "Something went wrong"
-        );
+      if (isSignUp) {
+        await register(form.name, form.email, form.password);
       } else {
-        alert("Network error. Please check if the server is running.");
+        await login(form.email, form.password);
       }
+
+      alert(isSignUp ? "Registration successful" : "Login successful");
+    } catch (err) {
+      alert(err.response?.data?.error || "Authentication failed");
     } finally {
       setLoading(false);
     }
   }
 
-  function handleLogout() {
-    setIsLoggedIn(false);
-    setUserData(null);
-    setForm({ name: "", email: "", password: "" });
-  }
-
-  // If logged in, show account page
-  if (isLoggedIn && userData) {
+  // The user is logged in if (user !== null)
+  if (user) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-between px-8 text-white">
-       
-            <div className="w-full max-w-6xl mx-auto mb-10">
-              <Spline scene="https://prod.spline.design/o9eNrUZbrQagGdEw/scene.splinecode" />
-            </div>
+        <div className="w-full max-w-6xl mx-auto mb-10">
+          <Spline scene="https://prod.spline.design/o9eNrUZbrQagGdEw/scene.splinecode" />
+        </div>
 
         {/* Right Profile Section */}
         <div className="w-full max-w-xl p-10 rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl flex flex-col">
-
           {/* Profile Header */}
           <div className="text-center mb-8">
             <div className="w-24 h-20 mx-auto mb-5 rounded-full bg-white text-black flex items-center justify-center text-4xl font-bold shadow-md">
-              {userData.name?.[0]?.toUpperCase() || "U"}
+              {user.name?.[0]?.toUpperCase() || "U"}
             </div>
 
             <h1 className="text-4xl font-extrabold tracking-tight">
               Welcome back
             </h1>
-            <p className="mt-2 text-gray-400 text-sm">{userData.email}</p>
+            <p className="mt-2 text-gray-400 text-sm">{user.email}</p>
           </div>
 
           {/* User Info Grid */}
@@ -123,20 +63,20 @@ export default function BlackWhiteSignPage() {
               <p className="text-xs uppercase tracking-wide text-gray-500 mb-2">
                 Name
               </p>
-              <p className="text-xl font-semibold">{userData.name}</p>
+              <p className="text-xl font-semibold">{user.name}</p>
             </div>
 
             <div className="p-6 rounded-2xl bg-white/5 border border-white/10">
               <p className="text-xs uppercase tracking-wide text-gray-500 mb-2">
                 Email
               </p>
-              <p className="text-xl font-semibold">{userData.email}</p>
+              <p className="text-xl font-semibold">{user.email}</p>
             </div>
           </div>
 
           {/* Actions */}
           <button
-            onClick={handleLogout}
+            onClick={logout}
             className="w-full py-4 rounded-full bg-white text-black font-semibold text-lg hover:bg-gray-200 transition shadow-md">
             Sign Out
           </button>
@@ -149,6 +89,7 @@ export default function BlackWhiteSignPage() {
     );
   }
 
+  // If NOT logged in → show login page
   return (
     <div className="min-h-screen flex items-center justify-center bg-black text-white px-6">
       <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8 items-center">

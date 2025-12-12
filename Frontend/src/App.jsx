@@ -5,7 +5,7 @@ import About from "./Pages/About";
 import Categories from "./Pages/Categories";
 import Shop from "./Pages/Shop";
 import Login from "./Pages/Login";
-import AccountPage from "./Pages/Account";
+// import AccountPage from "./Pages/Account";
 import ProductDetail from "./Pages/ProductDetail";
 import Order from "./Pages/Order";
 import ContactUs from "./Pages/ContactUs";
@@ -41,10 +41,10 @@ export default function App() {
       path: "/Login",
       element : <><Navbar/> <Login/></>,
     },
-    {
-      path: "/Account",
-      element : <><Navbar/> <AccountPage/></>,
-    },
+    // {
+    //   path: "/Account",
+    //   element : <><Navbar/> <AccountPage/></>,
+    // },
     {
       path: "/Order",
       element : <><Navbar/> <Order/></>,

@@ -102,13 +102,13 @@ export default function Navbar() {
                     >
                       Sign in
                     </Link>
-                    <Link
+                    {/* <Link
                       to="/Account"
                       className="block px-4 py-2 text-sm hover:bg-gray-50"
                       onClick={() => setAccountOpen(false)}
                     >
                       My account
-                    </Link>
+                    </Link> */}
                     <Link
                       to="/Order"
                       className="block px-4 py-2 text-sm hover:bg-gray-50"
