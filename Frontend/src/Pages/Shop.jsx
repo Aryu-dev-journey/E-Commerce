@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
-
+import { useCart } from "./CartContext";
 export default function ShopPage() {
   const { id } = useParams();
 
@@ -27,6 +27,14 @@ export default function ShopPage() {
     () => ["all", ...Array.from(new Set(products.map((p) => p.category)))],
     [products]
   );
+
+  // const handleAdd = {
+
+  //   const product = {
+
+  //   }
+
+  // }
 
   // Filtering + sorting
   const filtered = useMemo(() => {

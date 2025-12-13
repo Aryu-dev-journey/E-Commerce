@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Spline from "@splinetool/react-spline";
+import { useCart } from "./CartContext";
+
 
 export default function Home() {
   const [featured, setFeatured] = useState([]);
   const [email, setEmail] = useState("");
+  const { addToCart } = useCart();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,12 +21,25 @@ export default function Home() {
       .then((res) => setFeatured(res.data));
   }, []);
 
+const handleAdd = (product) => {
+  const cartItem = {
+    id: product.id,
+    title: product.name,
+    price: product.price,
+    image: product.image,
+    qty: 1,
+  };
+
+  addToCart(cartItem);
+};
+
+
   return (
     <main className="flex flex-col items-center justify-start min-h-screen bg-black text-white px-6">
       {/* Spline bot added */}
-      {/* <div className="w-full max-w-6xl mx-auto mb-10">
+      <div className="w-full max-w-6xl mx-auto mb-10">
         <Spline scene="https://prod.spline.design/o9eNrUZbrQagGdEw/scene.splinecode" />
-      </div>  */}
+      </div> 
 
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center text-center -mt-5">
@@ -73,7 +89,9 @@ export default function Home() {
               </div>
               <h3 className="text-lg font-semibold mb-1">{item.name}</h3>
               <p className="text-gray-400 mb-4">₹{item.price}</p>
-              <button className="bg-white text-black px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-200 transition">
+              <button 
+              onClick={() => handleAdd(item)}
+              className="bg-white text-black px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-200 transition">
                 Add to Cart
               </button>
             </div>
