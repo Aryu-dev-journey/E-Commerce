@@ -118,11 +118,10 @@ cd ./backend
 npm install
 npm run dev
 
-🖥️ Screenshots (optional)
+🖥️ Screenshots :
 
-Add your screenshots in /assets folder and replace the placeholders below.
+<img width="949" height="468" alt="home" src="https://github.com/user-attachments/assets/26e60b10-1a7f-4033-95e1-6b0f9fd2228b" />
 
-Home Page	Product Details
 
 	
 🤝 Contributing
