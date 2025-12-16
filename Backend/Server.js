@@ -238,6 +238,64 @@ app.post("/api/logout", (req, res) => {
   res.json({ message: "Logged out" });
 });
 
+app.get("/api/charts/sales", authenticateToken, async (req, res) => {
+  try {
+    const last7Days = new Date();
+    last7Days.setDate(last7Days.getDate() - 6);
+
+    const sales = await Order.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: last7Days },
+          status: "paid", // ✅ only paid orders
+        },
+      },
+      {
+        $group: {
+          _id: { $dayOfWeek: "$createdAt" },
+          revenue: { $sum: "$amount" }, // ✅ correct field
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+
+    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    const formatted = sales.map((s) => ({
+      date: days[s._id - 1],
+      revenue: s.revenue,
+    }));
+
+    res.json(formatted);
+  } catch (err) {
+    console.error("Sales chart error:", err);
+    res.status(500).json({ error: "Failed to load sales chart" });
+  }
+});
+
+app.get("/api/charts/order-status", authenticateToken, async (req, res) => {
+  try {
+    const stats = await Order.aggregate([
+      {
+        $group: {
+          _id: "$status",
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const formatted = stats.map((s) => ({
+      status: s._id,
+      count: s.count,
+    }));
+
+    res.json(formatted);
+  } catch (err) {
+    console.error("Order status chart error:", err);
+    res.status(500).json({ error: "Failed to load order status chart" });
+  }
+});
+
 // ==========================================================
 // START SERVER
 // ==========================================================
