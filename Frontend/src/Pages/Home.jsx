@@ -19,7 +19,7 @@ export default function Home() {
     const fetchFeatured = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${API_BASE_URL}/api/featured`);
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/featured`);
         setFeatured(res.data);
       } catch (err) {
         console.error(err);

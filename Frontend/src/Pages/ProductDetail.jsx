@@ -24,9 +24,7 @@ export default function ProductDetailPage() {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(
-          `${API_BASE_URL}/api/products/${id}`
-        );
+        const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products`);
         setProduct(res.data);
       } catch (err) {
         console.error(err);
