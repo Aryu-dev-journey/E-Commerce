@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/ecom");
+mongoose.connect(process.env.MONGO_URI);
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
