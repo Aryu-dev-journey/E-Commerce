@@ -28,22 +28,23 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // CORS (must allow credentials)
+const cors = require("cors");
+
 const allowedOrigins = [
-  "http://localhost:5173", // for local dev frontend
-  "https://eclipsestore.vercel.app", // your deployed frontend
+  "https://eclipsestore-aryu-dev-journeys-projects.vercel.app",
+  "http://localhost:5173", // for local testing
 ];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // allow mobile apps or Postman
+      if (!origin) return callback(null, true); // allow Postman, curl, mobile apps
       if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
-        return callback(new Error(msg), false);
+        return callback(new Error("CORS policy blocked this origin"), false);
       }
       return callback(null, true);
     },
-    credentials: true,
+    credentials: true, // allow cookies
   })
 );
 
