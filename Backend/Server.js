@@ -33,7 +33,7 @@ app.use(
     origin:
       process.env.NODE_ENV === "production"
         ? "https://yourdomain.com"
-        : "http://localhost:5173",
+        : "https://eclipsestore.vercel.app/",
     credentials: true,
   })
 );
