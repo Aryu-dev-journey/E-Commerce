@@ -24,7 +24,9 @@ export default function ProductDetailPage() {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`${API_BASE_URL}/api/products/${id}`);
+        const res = await axios.get(
+          `${API_BASE_URL}/api/products/${id}`
+        );
         setProduct(res.data);
       } catch (err) {
         console.error(err);
@@ -85,6 +87,7 @@ export default function ProductDetailPage() {
   return (
     <div className="min-h-screen bg-white text-black flex justify-center p-6">
       <div className="w-full max-w-5xl flex flex-col md:flex-row gap-10">
+
         {/* IMAGE */}
         <div className="w-full md:w-1/2 rounded-xl overflow-hidden border border-black/20 shadow-sm">
           <img
@@ -96,7 +99,9 @@ export default function ProductDetailPage() {
 
         {/* DETAILS */}
         <div className="w-full md:w-1/2 flex flex-col space-y-6">
-          <h1 className="text-3xl md:text-4xl font-semibold">{product.name}</h1>
+          <h1 className="text-3xl md:text-4xl font-semibold">
+            {product.name}
+          </h1>
 
           <p className="text-2xl font-semibold">₹{product.price}</p>
 
@@ -108,7 +113,8 @@ export default function ProductDetailPage() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setQty(Math.max(1, qty - 1))}
-              className="px-4 py-2 border border-black rounded hover:bg-black hover:text-white">
+              className="px-4 py-2 border border-black rounded hover:bg-black hover:text-white"
+            >
               −
             </button>
 
@@ -116,7 +122,8 @@ export default function ProductDetailPage() {
 
             <button
               onClick={() => setQty(qty + 1)}
-              className="px-4 py-2 border border-black rounded hover:bg-black hover:text-white">
+              className="px-4 py-2 border border-black rounded hover:bg-black hover:text-white"
+            >
               +
             </button>
           </div>
@@ -125,7 +132,8 @@ export default function ProductDetailPage() {
           <div className="flex gap-4 mt-4">
             <button
               onClick={handleAddToCart}
-              className="flex items-center gap-2 px-6 py-3 border border-black rounded-lg hover:bg-black hover:text-white">
+              className="flex items-center gap-2 px-6 py-3 border border-black rounded-lg hover:bg-black hover:text-white"
+            >
               <ShoppingCart size={20} />
               Add to Cart
             </button>
@@ -136,8 +144,12 @@ export default function ProductDetailPage() {
                 isInWishlist
                   ? "bg-red-500 text-white border-red-500"
                   : "border-black hover:bg-black hover:text-white"
-              }`}>
-              <Heart size={20} fill={isInWishlist ? "currentColor" : "none"} />
+              }`}
+            >
+              <Heart
+                size={20}
+                fill={isInWishlist ? "currentColor" : "none"}
+              />
               {isInWishlist ? "In Wishlist" : "Wishlist"}
             </button>
           </div>

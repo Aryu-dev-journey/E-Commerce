@@ -20,10 +20,7 @@ export default function Home() {
       try {
         setLoading(true);
         const res = await axios.get(`${API_BASE_URL}/api/featured`);
-
-        // Ensure we always have an array
-        const products = Array.isArray(res.data) ? res.data : res.data.products || [];
-        setFeatured(products);
+        setFeatured(res.data);
       } catch (err) {
         console.error(err);
         setError("Failed to load featured products.");
@@ -77,17 +74,22 @@ export default function Home() {
   // --------------------------------------------------
   return (
     <main className="flex flex-col items-center justify-start min-h-screen bg-black text-white px-6">
-      {/* Spline Scene */}
+      {/* Spline bot added */}
       <div className="w-full max-w-6xl mx-auto mb-10">
         <Spline scene="https://prod.spline.design/o9eNrUZbrQagGdEw/scene.splinecode" />
       </div>
 
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center text-center -mt-5">
-        <p className="text-sm tracking-widest text-gray-400 mb-4">MONOCHROME STORE</p>
-        <h1 className="text-5xl font-extrabold mb-4">Discover Minimalist Essentials</h1>
+        <p className="text-sm tracking-widest text-gray-400 mb-4">
+          MONOCHROME STORE
+        </p>
+        <h1 className="text-5xl font-extrabold mb-4">
+          Discover Minimalist Essentials
+        </h1>
         <p className="text-lg text-gray-300 max-w-2xl mb-8">
-          Shop clean, timeless designs that fit every lifestyle — simplicity never goes out of style.
+          Shop clean, timeless designs that fit every lifestyle — simplicity
+          never goes out of style.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
           <a
@@ -106,39 +108,38 @@ export default function Home() {
       </section>
 
       {/* Featured Products */}
-      <section id="shop" className="w-full py-24 border-t border-white/10 text-center">
+      <section
+        id="shop"
+        className="w-full py-24 border-t border-white/10 text-center"
+      >
         <h2 className="text-3xl font-bold mb-10">Featured Products</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
-          {Array.isArray(featured) && featured.length > 0 ? (
-            featured.map((item, i) => (
-              <div
-                key={i}
-                className="p-6 border border-white/10 rounded-lg bg-white/5 hover:bg-white/10 transition flex flex-col items-center"
-              >
-                <div className="w-full aspect-square bg-white/10 rounded mb-4 flex items-center justify-center overflow-hidden">
-                  {item.image ? (
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover rounded"
-                    />
-                  ) : (
-                    <span className="text-gray-400 text-sm">No Image</span>
-                  )}
-                </div>
-                <h3 className="text-lg font-semibold mb-1">{item.name}</h3>
-                <p className="text-gray-400 mb-4">₹{item.price}</p>
-                <button
-                  onClick={() => handleAdd(item)}
-                  className="bg-white text-black px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-200 transition"
-                >
-                  Add to Cart
-                </button>
+          {featured.map((item, i) => (
+            <div
+              key={i}
+              className="p-6 border border-white/10 rounded-lg bg-white/5 hover:bg-white/10 transition flex flex-col items-center"
+            >
+              <div className="w-full aspect-square bg-white/10 rounded mb-4 flex items-center justify-center overflow-hidden">
+                {item.image ? (
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover rounded"
+                  />
+                ) : (
+                  <span className="text-gray-400 text-sm">No Image</span>
+                )}
               </div>
-            ))
-          ) : (
-            <p className="text-gray-400 col-span-full">No featured products available.</p>
-          )}
+              <h3 className="text-lg font-semibold mb-1">{item.name}</h3>
+              <p className="text-gray-400 mb-4">₹{item.price}</p>
+              <button
+                onClick={() => handleAdd(item)}
+                className="bg-white text-black px-4 py-2 rounded-full text-sm font-semibold hover:bg-gray-200 transition"
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
         </div>
       </section>
 
