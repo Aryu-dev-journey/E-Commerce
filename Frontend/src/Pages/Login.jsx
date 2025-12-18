@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Spline from "@splinetool/react-spline";
-import { useAuth } from "../../../Backend/context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 export default function BlackWhiteSignPage() {
   const [isSignUp, setIsSignUp] = useState(false);
