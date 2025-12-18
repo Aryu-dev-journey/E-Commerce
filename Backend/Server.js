@@ -28,12 +28,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // CORS (must allow credentials)
+const allowedOrigins = [
+  "http://localhost:5173", // for local dev frontend
+  "https://eclipsestore.vercel.app", // your deployed frontend
+];
+
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? "https://yourdomain.com"
-        : "https://eclipsestore.vercel.app/",
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // allow mobile apps or Postman
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = `The CORS policy for this site does not allow access from the specified Origin.`;
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     credentials: true,
   })
 );
