@@ -19,7 +19,7 @@ export default function ContactUs() {
     e.preventDefault();
     setStatus("sending");
     try {
-      const res = await fetch("http://localhost:3000/api/ContactUs", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/ContactUs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

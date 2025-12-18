@@ -28,23 +28,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // CORS (must allow credentials)
-const cors = require("cors");
-
-const allowedOrigins = [
-  "https://eclipsestore-aryu-dev-journeys-projects.vercel.app",
-  "http://localhost:5173", // for local testing
-];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // allow Postman, curl, mobile apps
-      if (allowedOrigins.indexOf(origin) === -1) {
-        return callback(new Error("CORS policy blocked this origin"), false);
-      }
-      return callback(null, true);
-    },
-    credentials: true, // allow cookies
+    origin:
+      process.env.NODE_ENV === "production"
+        ? "https://yourdomain.com"
+        : "http://localhost:5173",
+    credentials: true,
   })
 );
 
