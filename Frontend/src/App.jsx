@@ -10,7 +10,7 @@ import ProductDetail from "./Pages/ProductDetail";
 import Order from "./Pages/Order";
 import ContactUs from "./Pages/ContactUs";
 import CartPage from "./Pages/Cartpage";
-import Wishlist from "./Pages/wishlist";
+import Wishlist from "./Pages/Wishlist";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Navbar from "./Components/Navbar";
