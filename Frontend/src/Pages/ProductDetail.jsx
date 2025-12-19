@@ -1,53 +1,99 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import { Heart, ShoppingCart } from "lucide-react";
 import { useCart } from "./CartContext";
 import { useWishlist } from "./WishlistContext";
-
+import api from "../api/axios";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
+
   const [product, setProduct] = useState(null);
   const [qty, setQty] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
   const { addToCart } = useCart();
   const { addToWishlist, wishlist } = useWishlist();
 
-  // Check if product is already in wishlist
-  const isInWishlist = wishlist.some(item => item.id === product?.id);
-
+  // --------------------------------------------------
+  // FETCH PRODUCT
+  // --------------------------------------------------
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/api/products/${id}`)
-      .then((res) => setProduct(res.data))
-      .catch((err) => console.error("Failed to fetch product:", err));
+    const fetchProduct = async () => {
+      try {
+        const res = await api.get(`/api/products/${id}`);
+
+        // normalize backend response
+        const productData = res.data.product || res.data.data || res.data;
+
+        if (!productData) {
+          throw new Error("Product not found");
+        }
+
+        // normalize id (_id -> id)
+        setProduct({
+          ...productData,
+          id: productData._id || productData.id,
+        });
+      } catch (err) {
+        console.error("Failed to fetch product:", err);
+        setError("Product not found");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
   }, [id]);
 
-  if (!product)
+  // --------------------------------------------------
+  // LOADING / ERROR STATES
+  // --------------------------------------------------
+  if (loading) {
     return (
-      <p className="text-center mt-20 text-gray-600 tracking-wide">
-        Loading...
+      <p className="text-center mt-20 text-gray-500 tracking-wide">
+        Loading product...
       </p>
     );
+  }
 
-  const handleAdd = () => {
+  if (error || !product) {
+    return (
+      <p className="text-center mt-20 text-red-500 tracking-wide">
+        {error || "Product not available"}
+      </p>
+    );
+  }
+
+  // --------------------------------------------------
+  // HELPERS
+  // --------------------------------------------------
+  const isInWishlist =
+    Array.isArray(wishlist) && wishlist.some((item) => item.id === product.id);
+
+  const handleAddToCart = () => {
     const item = {
-      id: product.id || id,
+      id: product.id,
       title: product.name,
       price: product.price,
       image: product.image,
+      qty,
     };
-    addToCart(item, qty);
+
+    addToCart(item);
   };
 
   const handleAddToWishlist = () => {
     addToWishlist(product);
   };
 
+  // --------------------------------------------------
+  // UI
+  // --------------------------------------------------
   return (
     <div className="min-h-screen bg-white text-black flex justify-center p-6">
       <div className="w-full max-w-5xl flex flex-col md:flex-row gap-10 items-start">
-
         {/* LEFT IMAGE */}
         <div className="w-full md:w-1/2 rounded-xl overflow-hidden border border-black/20 shadow-sm">
           <img
@@ -59,16 +105,12 @@ export default function ProductDetailPage() {
 
         {/* RIGHT DETAILS */}
         <div className="w-full md:w-1/2 flex flex-col space-y-6">
-
-          {/* Product Title */}
           <h1 className="text-3xl md:text-4xl font-semibold tracking-tight">
             {product.name}
           </h1>
 
-          {/* Product Price */}
           <p className="text-2xl font-semibold">₹{product.price}</p>
 
-          {/* Product Description */}
           <p className="text-gray-600 leading-relaxed">
             {product.description || "No description available."}
           </p>
@@ -77,8 +119,7 @@ export default function ProductDetailPage() {
           <div className="flex items-center gap-4">
             <button
               onClick={() => setQty(Math.max(1, qty - 1))}
-              className="px-4 py-2 border border-black rounded hover:bg-black hover:text-white transition"
-            >
+              className="px-4 py-2 border border-black rounded hover:bg-black hover:text-white transition">
               -
             </button>
 
@@ -86,8 +127,7 @@ export default function ProductDetailPage() {
 
             <button
               onClick={() => setQty(qty + 1)}
-              className="px-4 py-2 border border-black rounded hover:bg-black hover:text-white transition"
-            >
+              className="px-4 py-2 border border-black rounded hover:bg-black hover:text-white transition">
               +
             </button>
           </div>
@@ -95,9 +135,8 @@ export default function ProductDetailPage() {
           {/* ACTION BUTTONS */}
           <div className="flex gap-4 mt-4">
             <button
-              onClick={handleAdd}
-              className="flex items-center gap-2 px-6 py-3 border border-black rounded-lg hover:bg-black hover:text-white transition"
-            >
+              onClick={handleAddToCart}
+              className="flex items-center gap-2 px-6 py-3 border border-black rounded-lg hover:bg-black hover:text-white transition">
               <ShoppingCart size={20} />
               Add to Cart
             </button>
@@ -105,11 +144,10 @@ export default function ProductDetailPage() {
             <button
               onClick={handleAddToWishlist}
               className={`flex items-center gap-2 px-6 py-3 border rounded-lg transition ${
-                isInWishlist 
-                  ? "bg-red-500 text-white border-red-500" 
+                isInWishlist
+                  ? "bg-red-500 text-white border-red-500"
                   : "border-black hover:bg-black hover:text-white"
-              }`}
-            >
+              }`}>
               <Heart size={20} fill={isInWishlist ? "currentColor" : "none"} />
               {isInWishlist ? "In Wishlist" : "Wishlist"}
             </button>

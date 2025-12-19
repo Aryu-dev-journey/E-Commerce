@@ -19,11 +19,11 @@ Backend
 
     📁 Project Structure
     📦 project-root
-     ┣ 📂 frontend
+     ┣ 📂 Frontend
      ┃ ┣ 📁 src
      ┃ ┣ 📄 package.json
      ┃ ┗ ...
-     ┣ 📂 backend
+     ┣ 📂 Backend
      ┃ ┣ 📁 model
      ┃ ┣ 📁 routes
      ┃ ┣ 📁 controllers
@@ -91,7 +91,10 @@ Create a .env file inside backend/:
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
 JWT_EXPIRE=7d
-PORT=3000
+PORT=5000
+RAZORPAY_KEY_ID=your_key
+RAZORPAY_KEY_SECRET=your_secret
+
 
 🧠 Requirements
 

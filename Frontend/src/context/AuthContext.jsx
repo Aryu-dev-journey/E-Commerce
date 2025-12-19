@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import api from "../api/axios";
 
 const AuthContext = createContext();
 
@@ -9,8 +10,8 @@ export function AuthProvider({ children }) {
 
   // Auto-login on refresh
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/profile", {
+    api
+      .get("/api/profile", {
         withCredentials: true,
       })
       .then((res) => {
@@ -26,8 +27,8 @@ export function AuthProvider({ children }) {
 
   // Login function
   async function login(email, password) {
-    const res = await axios.post(
-      "http://localhost:3000/api/login",
+    const res = await api.post(
+      "/api/login",
       { email, password },
       { withCredentials: true }
     );
@@ -37,8 +38,8 @@ export function AuthProvider({ children }) {
 
   // Register function
   async function register(name, email, password) {
-    const res = await axios.post(
-      "http://localhost:3000/api/register",
+    const res = await api.post(
+      "/api/register",
       { name, email, password },
       { withCredentials: true }
     );
@@ -48,8 +49,8 @@ export function AuthProvider({ children }) {
 
   // Logout (clear cookie)
   async function logout() {
-    await axios.post(
-      "http://localhost:3000/api/logout",
+    await api.post(
+      "/api/logout",
       {},
       { withCredentials: true }
     );
