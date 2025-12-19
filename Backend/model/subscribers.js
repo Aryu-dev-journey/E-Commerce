@@ -1,16 +1,8 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose";
 
-// Instead of hardcoding
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+const subscriberSchema = new mongoose.Schema({
+  email: String,
+  createdAt: { type: Date, default: Date.now },
+});
 
-
-
-const subscribersSchema = new mongoose.Schema({
-    email : {
-        type : String  
-    }
-})
-
-const Subscriber = mongoose.model("subscribers", subscribersSchema)
-
-module.exports = Subscriber
+export default mongoose.model("Subscriber", subscriberSchema);

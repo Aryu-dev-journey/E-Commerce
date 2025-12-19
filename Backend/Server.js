@@ -5,6 +5,16 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const { body, validationResult } = require("express-validator");
 require("dotenv").config();
+import mongoose from "mongoose";
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch((err) => {
+    console.error("❌ MongoDB connection error:", err);
+    process.exit(1);
+  });
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
