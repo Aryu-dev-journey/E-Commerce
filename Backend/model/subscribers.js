@@ -1,8 +1,14 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose")
 
-const subscriberSchema = new mongoose.Schema({
-  email: String,
-  createdAt: { type: Date, default: Date.now },
-});
+mongoose.connect("mongodb://localhost:27017/ecom")
 
-export default mongoose.model("Subscriber", subscriberSchema);
+
+const subscribersSchema = new mongoose.Schema({
+    email : {
+        type : String  
+    }
+})
+
+const Subscriber = mongoose.model("subscribers", subscribersSchema)
+
+module.exports = Subscriber
