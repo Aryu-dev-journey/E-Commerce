@@ -70,7 +70,7 @@ app.use(cors({
   credentials: true,
 }));
 
-app.options("*", cors());
+
 
 // ROUTE IMPORT
 app.use("/api", productRoute);
@@ -328,6 +328,11 @@ app.get("/api/charts/order-status", authenticateToken, async (req, res) => {
     console.error("Order status chart error:", err);
     res.status(500).json({ error: "Failed to load order status chart" });
   }
+});
+
+// 404 HANDLER (SAFE)
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
 });
 
 // ==========================================================
