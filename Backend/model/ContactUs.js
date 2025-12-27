@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/ecom");
+// mongoose.connect("mongodb://localhost:27017/ecom");
 
 const ContactUsSchema = new mongoose.Schema({
   name: {

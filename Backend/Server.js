@@ -1,10 +1,33 @@
 const express = require("express");
+const mongoose = require("mongoose")
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const { body, validationResult } = require("express-validator");
 require("dotenv").config();
+
+// ==========================================================
+// MONGODB CONNECTION 
+// ==========================================================
+const connectDB = async () => {
+  try {
+    // Use environment variable or fallback to localhost
+    const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/ecom";
+    
+    await mongoose.connect(mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log(`✅ MongoDB Connected: ${mongoURI.includes('localhost') ? 'Local' : 'Atlas'}`);
+  } catch (error) {
+    console.error(`❌ MongoDB Connection Error: ${error.message}`);
+    process.exit(1);
+  }
+};
+
+// Connect to database
+connectDB();
 
 const app = express();
 const port = 3000;
@@ -300,5 +323,6 @@ app.get("/api/charts/order-status", authenticateToken, async (req, res) => {
 // START SERVER
 // ==========================================================
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`🚀 Server is running on port ${port}`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
 });
