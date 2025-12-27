@@ -53,7 +53,7 @@ app.use(cookieParser());
 // CORS (must allow credentials)
 const allowedOrigins = [
   'http://localhost:5173',  // Local frontend
-  'https://e-commerce-xi-amber.vercel.app',  // Your Vercel deployment
+  'https://e-commerce-phi-ruddy-21.vercel.app/',  // Your Vercel deployment
   // Add any other domains you need
 ];
 
