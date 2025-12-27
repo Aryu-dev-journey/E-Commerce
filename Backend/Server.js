@@ -1,25 +1,31 @@
 const express = require("express");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const { body, validationResult } = require("express-validator");
 require("dotenv").config();
+const isProduction = process.env.NODE_ENV === "production";
 
 // ==========================================================
-// MONGODB CONNECTION 
+// MONGODB CONNECTION
 // ==========================================================
 const connectDB = async () => {
   try {
     // Use environment variable or fallback to localhost
-    const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/ecom";
-    
+    const mongoURI =
+      process.env.MONGODB_URI || "mongodb://localhost:27017/ecom";
+
     await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log(`✅ MongoDB Connected: ${mongoURI.includes('localhost') ? 'Local' : 'Atlas'}`);
+    console.log(
+      `✅ MongoDB Connected: ${
+        mongoURI.includes("localhost") ? "Local" : "Atlas"
+      }`
+    );
   } catch (error) {
     console.error(`❌ MongoDB Connection Error: ${error.message}`);
     process.exit(1);
@@ -56,21 +62,21 @@ const allowedOrigins = [
   "https://e-commerce-phi-ruddy-21.vercel.app",
 ];
 
-app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
 
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.log("Blocked by CORS:", origin);
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-}));
-
-
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.log("Blocked by CORS:", origin);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 // ROUTE IMPORT
 app.use("/api", productRoute);
@@ -166,10 +172,11 @@ app.post(
       res
         .cookie("token", token, {
           httpOnly: true,
-          secure: false,
-          sameSite: "lax",
+          secure: isProduction, // 🔑
+          sameSite: isProduction ? "none" : "lax", // 🔑
           maxAge: 7 * 24 * 60 * 60 * 1000,
         })
+
         .json({
           message: "Registration successful",
           user: { id: user._id, name: user.name, email: user.email },
@@ -217,10 +224,11 @@ app.post(
       res
         .cookie("token", token, {
           httpOnly: true,
-          secure: false,
-          sameSite: "lax",
+          secure: isProduction,
+          sameSite: isProduction ? "none" : "lax",
           maxAge: 7 * 24 * 60 * 60 * 1000,
         })
+
         .json({
           message: "Login successful",
           user: { id: user._id, name: user.name, email: user.email },
@@ -264,11 +272,11 @@ app.get("/api/profile", authenticateToken, async (req, res) => {
 // LOGOUT (CLEAR COOKIE)
 // ==========================================================
 app.post("/api/logout", (req, res) => {
-  res.clearCookie("token", {
-    httpOnly: true,
-    secure: false,
-    sameSite: "lax",
-  });
+res.clearCookie("token", {
+  httpOnly: true,
+  secure: isProduction,
+  sameSite: isProduction ? "none" : "lax",
+});
   res.json({ message: "Logged out" });
 });
 
@@ -340,6 +348,5 @@ app.use((req, res) => {
 // ==========================================================
 app.listen(port, () => {
   console.log(`🚀 Server is running on port ${port}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || "development"}`);
 });
-
