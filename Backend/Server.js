@@ -32,7 +32,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? "mongodb+srv://indexaryan_db_user:amEylPpaOGdXlNb4@cluster0.gelu1gb.mongodb.net/"
+        ? "https://yourdomain.com"
         : "http://localhost:5173",
     credentials: true,
   })
