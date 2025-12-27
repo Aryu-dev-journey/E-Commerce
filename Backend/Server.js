@@ -1,5 +1,5 @@
 const express = require("express");
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -8,18 +8,21 @@ const { body, validationResult } = require("express-validator");
 require("dotenv").config();
 
 // ==========================================================
-// MONGODB CONNECTION 
+// MONGODB CONNECTION
 // ==========================================================
 const connectDB = async () => {
   try {
     // Use environment variable or fallback to localhost
-    const mongoURI = process.env.MONGODB_URI || "mongodb://localhost:27017/ecom";
-    
-    await mongoose.connect(mongoURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log(`✅ MongoDB Connected: ${mongoURI.includes('localhost') ? 'Local' : 'Atlas'}`);
+    const mongoURI =
+      process.env.MONGODB_URI || "mongodb://localhost:27017/ecom";
+
+    // REMOVE deprecated options for newer MongoDB driver
+    await mongoose.connect(mongoURI);
+    console.log(
+      `✅ MongoDB Connected: ${
+        mongoURI.includes("localhost") ? "Local" : "Atlas"
+      }`
+    );
   } catch (error) {
     console.error(`❌ MongoDB Connection Error: ${error.message}`);
     process.exit(1);
@@ -30,7 +33,7 @@ const connectDB = async () => {
 connectDB();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Use Render's PORT
 
 // MODELS
 const subscribersModel = require("./model/subscribers");
@@ -50,16 +53,30 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// CORS (must allow credentials)
+// CORS Configuration - FIXED
+const allowedOrigins = [
+  "https://e-commerce-xi-amber.vercel.app", // NO trailing slash!
+  "http://localhost:5173",
+];
+
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? "https://e-commerce-xi-amber.vercel.app/"
-        : "http://localhost:5173",
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg = `CORS policy: ${origin} not allowed`;
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
     credentials: true,
   })
 );
+
+// Handle preflight requests
+app.options("*", cors());
 
 // ROUTE IMPORT
 app.use("/api", productRoute);
@@ -151,12 +168,13 @@ app.post(
         { expiresIn: process.env.JWT_EXPIRE }
       );
 
-      // Set cookie
+      // Set cookie - UPDATED for production
+      const isProduction = process.env.NODE_ENV === "production";
       res
         .cookie("token", token, {
           httpOnly: true,
-          secure: false,
-          sameSite: "lax",
+          secure: isProduction, // true in production, false in development
+          sameSite: isProduction ? "none" : "lax", // "none" for cross-site in production
           maxAge: 7 * 24 * 60 * 60 * 1000,
         })
         .json({
@@ -202,12 +220,13 @@ app.post(
         { expiresIn: process.env.JWT_EXPIRE }
       );
 
-      // Send JWT cookie
+      // Send JWT cookie - UPDATED for production
+      const isProduction = process.env.NODE_ENV === "production";
       res
         .cookie("token", token, {
           httpOnly: true,
-          secure: false,
-          sameSite: "lax",
+          secure: isProduction, // true in production
+          sameSite: isProduction ? "none" : "lax", // "none" for cross-site
           maxAge: 7 * 24 * 60 * 60 * 1000,
         })
         .json({
@@ -253,10 +272,11 @@ app.get("/api/profile", authenticateToken, async (req, res) => {
 // LOGOUT (CLEAR COOKIE)
 // ==========================================================
 app.post("/api/logout", (req, res) => {
+  const isProduction = process.env.NODE_ENV === "production";
   res.clearCookie("token", {
     httpOnly: true,
-    secure: false,
-    sameSite: "lax",
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
   });
   res.json({ message: "Logged out" });
 });
@@ -324,5 +344,6 @@ app.get("/api/charts/order-status", authenticateToken, async (req, res) => {
 // ==========================================================
 app.listen(port, () => {
   console.log(`🚀 Server is running on port ${port}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🌍 Environment: ${process.env.NODE_ENV || "development"}`);
+  console.log(`✅ Allowed Origins: ${allowedOrigins.join(", ")}`);
 });
