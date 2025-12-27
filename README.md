@@ -108,8 +108,8 @@ npm
 
 ▶️ How to Run the Project
 1️⃣ Clone the repository
-git clone https://github.com/yourusername/your-ecom-project.git
-cd your-ecom-project
+git clone https://github.com/Aryu-dev-journey/E-Commerce.git
+cd E-Commerce
 
 🎨 Running the Frontend
 cd ./frontend
