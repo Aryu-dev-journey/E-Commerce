@@ -4,6 +4,7 @@ import axios from "axios";
 import { Heart, ShoppingCart } from "lucide-react";
 import { useCart } from "./CartContext";
 import { useWishlist } from "./WishlistContext";
+import api from "../api/axios";
 
 
 export default function ProductDetailPage() {
@@ -17,8 +18,8 @@ export default function ProductDetailPage() {
   const isInWishlist = wishlist.some(item => item.id === product?.id);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/api/products/${id}`)
+    api
+      .get(`/api/products/${id}`)
       .then((res) => setProduct(res.data))
       .catch((err) => console.error("Failed to fetch product:", err));
   }, [id]);

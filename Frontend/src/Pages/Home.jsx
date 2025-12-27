@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import api from "../api/axios";
 import Spline from "@splinetool/react-spline";
 import { useCart } from "./CartContext";
 
@@ -11,13 +12,13 @@ export default function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:3000/api/newsLetter", { email });
+    api.post("/api/newsLetter", { email });
     setEmail("");
   };
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/featured")
+    api
+      .get("/api/featured")
       .then((res) => setFeatured(res.data));
   }, []);
 

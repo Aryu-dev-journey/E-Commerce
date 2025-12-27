@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useCart } from "./CartContext";
+import api from "../api/axios";
 export default function ShopPage() {
   const { id } = useParams();
 
@@ -16,8 +17,8 @@ export default function ShopPage() {
 
   //  --------------------------------------------------------------------
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/api/products")
+    api
+      .get("/api/products")
       .then((response) => setProducts(response.data))
       .catch((error) => console.log(` If Error Getting Products: ${error}`));
   }, []);
