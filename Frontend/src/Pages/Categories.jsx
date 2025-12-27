@@ -157,6 +157,7 @@ function Icon({ name, className = "w-6 h-6" }) {
   };
   return icons[name] || null;
 }
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 function SlideMenu({
   open,
@@ -301,7 +302,7 @@ export default function CategoriesPage({ categories = allCategories }) {
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/Categorised");
+        const response = await fetch(`${API_BASE_URL}/api/Categorised`);
         const data = await response.json();
         setAllProducts(data);
       } catch (error) {
