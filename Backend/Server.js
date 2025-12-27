@@ -51,15 +51,27 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // CORS (must allow credentials)
-app.use(
-  cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? "https://e-commerce-xi-amber.vercel.app/"
-        : "http://localhost:5173",
-    credentials: true,
-  })
-);
+const allowedOrigins = [
+  'http://localhost:5173',  // Local frontend
+  'https://e-commerce-xi-amber.vercel.app',  // Your Vercel deployment
+  // Add any other domains you need
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      console.log('Blocked by CORS:', origin);
+      return callback(new Error('Not allowed by CORS'), false);
+    }
+  },
+  credentials: true,
+  exposedHeaders: ['set-cookie'],
+}));
 
 // ROUTE IMPORT
 app.use("/api", productRoute);
