@@ -76,7 +76,7 @@ app.use(
 );
 
 // Handle preflight requests
-app.options("*", cors());
+app.options("/*", cors());
 
 // ROUTE IMPORT
 app.use("/api", productRoute);
