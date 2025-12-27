@@ -55,7 +55,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? "https://yourdomain.com"
+        ? "https://e-commerce-xi-amber.vercel.app/"
         : "http://localhost:5173",
     credentials: true,
   })
