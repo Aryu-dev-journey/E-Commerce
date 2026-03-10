@@ -150,7 +150,7 @@ Feel free to open a PR.
 
 🧑‍💻 Author
 
-Your Name
+My Mail 📬 
 📧 index.aryan@gmail.com
 
 🌐 Portfolio: https://yourwebsite.com
